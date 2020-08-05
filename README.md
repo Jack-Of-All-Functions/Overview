@@ -1,6 +1,11 @@
-# Project Name
+# Front End Capstone - Product Overview
 
-> Project description
+> This is the product overview section of the Front End Capstone project. It includes these sections:
+- Product Info
+- Style Selector
+- Add to Cart
+- Image Gallery
+- Logo/Announcements
 
 ## Related Projects
 
