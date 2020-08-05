@@ -4,10 +4,9 @@
 
 ## Related Projects
 
-  - https://github.com/teamName/repo
-  - https://github.com/teamName/repo
-  - https://github.com/teamName/repo
-  - https://github.com/teamName/repo
+  - https://github.com/AwesomeDreamTeam/related-items
+  - https://github.com/AwesomeDreamTeam/reviews
+
 
 ## Table of Contents
 
@@ -16,8 +15,16 @@
 1. [Development](#development)
 
 ## Usage
+> In two separate terminals:
 
-> Some usage instructions
+> Start Server:
+```sh
+npm run start-server
+```
+> Start React:
+```sh
+npm run react-dev
+```
 
 ## Requirements
 
