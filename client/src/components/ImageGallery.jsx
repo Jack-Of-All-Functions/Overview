@@ -5,7 +5,7 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import { sizing } from '@material-ui/system'
+import { sizing } from '@material-ui/system';
 
 const useStyles = makeStyles({
   root: {
@@ -14,13 +14,11 @@ const useStyles = makeStyles({
   bigCard: {
     height: '100%',
     alignContent: 'center',
-
   }
-
 });
 
 
-const ImageCard = () => {
+const ImageCard = (props) => {
   const classes = useStyles();
 
 

@@ -6,6 +6,7 @@ import StyleSelectorCard from './StyleSelector.jsx';
 import CartCard from './AddToCart.jsx';
 import { Grid, Paper } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import { sizing } from '@material-ui/system'
 
 
 
@@ -15,27 +16,37 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles({
   root: {
     // border: 'solid',
-    // height: '100%'
+    height: '100%'
   },
+  imageGrid: {
+    // height: '100%',
+  },
+  tripleGrid: {
+    height: '100%',
+  },
+  infoGrid: {
+    height: '25%',
+  }
 
 });
 
 
-const Content = () => {
+const Content = (props) => {
   const classes = useStyles();
   return (
-    <Grid  container spacing={1}>
-      <Grid className={classes.root} item xs={12} sm={9}>
+
+    <Grid className={classes.root} container spacing={1}>
+      <Grid className={classes.imageGrid} item xs={12} sm={8}>
           <ImageCard />
       </Grid>
 
-      <Grid className={classes.root} item xs={12} sm={3}>
+      <Grid className={classes.tripleGrid} item xs={12} sm={4}>
         <ProductInfoCard />
         <StyleSelectorCard />
         <CartCard />
       </Grid>
 
-      <Grid className={classes.root} item xs={12}>
+      <Grid className={classes.infoGrid} item xs={12}>
        <ProductDescCard />
       </Grid>
     </Grid>

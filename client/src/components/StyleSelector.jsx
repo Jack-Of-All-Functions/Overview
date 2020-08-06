@@ -29,7 +29,7 @@ const useStyles = makeStyles({
 });
 
 
-const StyleSelectorCard = () => {
+const StyleSelectorCard = (props) => {
   const classes = useStyles();
   const bull = <span className={classes.bullet}>•</span>;
 
