@@ -1,6 +1,6 @@
 # Front End Capstone - Product Overview
 
-> This is the product overview section of the Front End Capstone project. It includes these sections:
+This is the product overview section of the Front End Capstone project. It includes these sections:
 - Product Info
 - Style Selector
 - Add to Cart
@@ -20,7 +20,7 @@
 1. [Development](#development)
 
 ## Usage
-> In two separate terminals:
+In two separate terminals:
 
 > Start Server:
 ```sh

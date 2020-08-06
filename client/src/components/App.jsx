@@ -1,5 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Grid } from '@material-ui/core';
+import Header from './Header.jsx'
+import Content from './Content.jsx'
 
 
 
@@ -13,8 +16,22 @@ class App extends React.Component {
 
   render () {
     return (
-      <h1>Hello, World!</h1>
-      <h2>This is a slight change!</h2>
+      <Grid container direction='column'>
+        <Grid item xs={12}>
+          <Header />
+        </Grid>
+        <Grid container justify='center' direction='column' />
+        <Grid item xs={12}>
+          <h3>Announcements Will Go Here</h3>
+        </Grid>
+        <Grid item container>
+          <Grid item  xs={false} sm={1}/>
+          <Grid item xs={12} >
+            <Content />
+          </Grid>
+          <Grid item xs={false} sm={1} />
+        </Grid>
+      </Grid>
     )
   }
 
