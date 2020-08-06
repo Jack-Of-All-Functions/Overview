@@ -11,6 +11,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      products= [],
       currentProduct: '',
       productDesc: '',
       productImg: '',
@@ -19,7 +20,10 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-
+    axios({
+      method: 'get',
+      url: '/products/list',
+    })
   }
 
   render () {
