@@ -12,11 +12,11 @@ const theme = createMuiTheme({
     secondary: {
       main: lightGreen[500],
     },
+    background: {
+      paper: '#303030',
+    }
   },
-  background: {
-    paper: grey[900],
-    default: blue[900],
-  }
+
 });
 
 export default theme;
