@@ -5,7 +5,7 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import { sizing } from '@material-ui/system';
+import { sizing } from '@material-ui/system'
 
 const useStyles = makeStyles({
   root: {
@@ -29,24 +29,20 @@ const useStyles = makeStyles({
 });
 
 
-const ProductInfoCard = (props) => {
+const ProductFeaturesCard = (props) => {
   const classes = useStyles();
+  const bull = <span className={classes.bullet}>•</span>;
+  const products = props.state.products;
+  const product = products[0];
 
   return (
     <Card className={classes.root} variant='outlined'>
       <CardContent>
-
         {props.state.isLoading
           ? <h4>Loading...</h4>
           : <div>
-            <div>
-              <p>Ratings</p>
-            </div>
-            <div>
-              <p style={{marginBottom: '0px'}}>{props.state.currentProduct.category}</p>
-              <h1 style={{marginBottom: '0px', marginTop: '2px'}}>{props.state.currentProduct.name}</h1>
-              <p style={{marginBottom: '0px', marginTop: '2px'}}>${props.state.currentProduct.default_price}</p>
-            </div>
+              <p style={{marginBottom: '0px'}}>No Additional Features</p>
+              {/* <p style={{marginBottom: '0px'}}>{props.state.currentProduct.features[1]}</p> */}
           </div>
         }
       </CardContent>
@@ -54,4 +50,4 @@ const ProductInfoCard = (props) => {
   );
 }
 
-export default ProductInfoCard;
+export default ProductFeaturesCard;

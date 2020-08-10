@@ -11,30 +11,135 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      products: [],
       currentProduct: '',
+      productId: '',
       productDesc: '',
-      productImg: '',
       productStyles: '',
+      currentStyle: '',
+      styleImages: '',
+      currentImg: '',
+      imageStyles: {
+        defaultView: {
+          display: 'block',
+          textAlign: 'center',
+          maxWidth: '50%',
+          maxHeight: '50%',
+          width: 'auto',
+          height: 'auto',
+          marginLeft: '20%',
+          borderRadius: '5px',
+          cursor: 'zoom-in',
+        },
+        enlargedView: {
+          display: 'block',
+          alignSelf: 'center',
+          maxWidth: '100%',
+          maxHeight: '100%',
+          width: 'auto',
+          height: 'auto',
+          borderRadius: '5px',
+          cursor: 'zoom-out',
+        }
+      },
+      currentImgStyleName: 'defaultView',
+      currentImgStyle: '',
+      isLoading: true,
+      thumbIsLoading: true,
     }
   }
 
   componentDidMount() {
+    axios({
+      method: 'get',
+      url: 'http://52.26.193.201:3000/products/list',
+    })
+      .then((data) => {
+        this.setState({
+          products: data.data,
+          isLoading: false,
+        })
+      })
+      .then(() => {
+        this.setState({
+          currentProduct: this.state.products[0],
+          productId: this.state.products[0].id,
+          productDesc: this.state.products[0].description,
+        })
+      })
+      .then(() => {
+        this.grabMyProduct();
+
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  };
+
+  grabMyProduct() {
+    axios({
+      method: 'get',
+      url: `http://52.26.193.201:3000/products/${this.state.productId}/styles`
+    })
+      .then((data) => {
+        this.setState({
+          productStyles: data.data.results,
+        })
+      })
+      .then(() => {
+        this.setState({
+          currentStyle: this.state.productStyles[0],
+        })
+      })
+      .then(() => {
+        this.setState({
+          styleImages: this.state.currentStyle.photos,
+        })
+      })
+      .then(() => {
+        this.setState({
+          currentImg: this.state.styleImages[0],
+          currentImgStyle: this.state.imageStyles.defaultView,
+          thumbIsLoading: false,
+        })
+      })
 
   }
 
-  render () {
+  changeView() {
+    if (this.state.currentImgStyleName === 'defaultView') {
+      this.setState({
+        thumbIsLoading: true,
+        currentImgStyle: this.state.imageStyles.enlargedView,
+        currentImgStyleName: 'enlargedView',
+      })
+    }
+    if (this.state.currentImgStyleName === 'enlargedView') {
+      this.setState({
+        thumbIsLoading: false,
+        currentImgStyle: this.state.imageStyles.defaultView,
+        currentImgStyleName: 'defaultView',
+      })
+    }
+  }
+
+  pickImage(index) {
+    this.setState({
+      currentImg: this.state.styleImages[index],
+    })
+  }
+
+  render() {
     return (
-      <Grid container direction='column'>
-        <Grid item xs={12}>
+      <Grid id='layout' container direction='column'>
+        <Grid id='header' item xs={12}>
           <Header />
         </Grid>
-        <Grid>
-          <h3 style={{textAlign: 'center'}}>Announcements Will Go Here</h3>
+        <Grid id='announcements'>
+          <h3 style={{ textAlign: 'center' }}>Announcements Will Go Here</h3>
         </Grid>
-        <Grid container>
-          {/* <Grid item xs={12}> */}
-            <Content />
-          {/* </Grid> */}
+        <Grid id='content' container>
+          <Content state={this.state} pickImage={this.pickImage.bind(this)} changeView={this.changeView.bind(this)} />
         </Grid>
       </Grid>
     )

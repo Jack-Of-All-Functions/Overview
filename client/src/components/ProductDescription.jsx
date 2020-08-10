@@ -32,11 +32,19 @@ const useStyles = makeStyles({
 const ProductDescCard = (props) => {
   const classes = useStyles();
   const bull = <span className={classes.bullet}>•</span>;
+  const products = props.state.products;
+  const product = products[0];
 
   return (
     <Card className={classes.root} variant='outlined'>
-      <CardContent>
-        <h4>Product Description Card</h4>
+      <CardContent >
+        {props.state.isLoading
+          ? <h4>Loading...</h4>
+          : <div>
+            <h2 id='slogan'>{product.slogan}</h2>
+            <p id='description'>{product.description}</p>
+          </div>
+        }
       </CardContent>
     </Card>
   );
