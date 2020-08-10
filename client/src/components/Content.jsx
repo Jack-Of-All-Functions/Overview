@@ -1,6 +1,7 @@
 import React from 'react';
 import ImageCard from './ImageGallery.jsx';
 import ProductDescCard from './ProductDescription.jsx';
+import ProductFeaturesCard from './ProductFeatures.jsx';
 import ProductInfoCard from './ProductInfo.jsx';
 import StyleSelectorCard from './StyleSelector.jsx';
 import CartCard from './AddToCart.jsx';
@@ -59,7 +60,7 @@ const Content = (props) => {
         <ProductDescCard state={props.state} />
       </Grid>
       <Grid className={classes.infoGrid} item xs={4}>
-        PlaceHolder
+        <ProductFeaturesCard state={props.state} />
       </Grid>
     </Grid>
 

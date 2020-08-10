@@ -37,8 +37,8 @@ const ImageCard = (props) => {
       cursor: 'default',
     },
     currentView: props.state.currentImgStyle,
-    paperBack: {
-      backgroundImage: `url(${props.state.currentImg.url})`
+    tester: {
+      height: '100%',
     }
   });
   const classes = useStyles();
@@ -70,8 +70,8 @@ const ImageCard = (props) => {
                         component='img'
                         image={props.state.currentImg.url}
                         onClick={props.changeView}
-                      >
-                      </CardMedia>
+                      />
+
                     </Grid>
                   </Grid>
                 }
