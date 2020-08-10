@@ -16,6 +16,8 @@ class App extends React.Component {
       productId: '',
       productDesc: '',
       productStyles: '',
+      productFeatures: '',
+      productRatings: {},
       currentStyle: '',
       styleImages: '',
       currentImg: '',
@@ -65,11 +67,12 @@ class App extends React.Component {
           currentProduct: this.state.products[0],
           productId: this.state.products[0].id,
           productDesc: this.state.products[0].description,
+          productFeatures: this.state.products[0].features,
         })
       })
       .then(() => {
         this.grabMyProduct();
-
+        this.getRatings();
       })
       .catch((err) => {
         console.log(err)
@@ -109,7 +112,7 @@ class App extends React.Component {
   changeView() {
     if (this.state.currentImgStyleName === 'defaultView') {
       this.setState({
-        thumbIsLoading: true,
+        // thumbIsLoading: true,
         currentImgStyle: this.state.imageStyles.enlargedView,
         currentImgStyleName: 'enlargedView',
       })
@@ -121,6 +124,18 @@ class App extends React.Component {
         currentImgStyleName: 'defaultView',
       })
     }
+  }
+
+  getRatings() {
+    axios({
+      method: 'get',
+      url: `http://52.26.193.201:3000/reviews/${this.state.productId}/meta`
+    })
+    .then((data) => {
+      this.setState({
+        productRatings: data.data.ratings,
+      })
+    })
   }
 
   pickImage(index) {

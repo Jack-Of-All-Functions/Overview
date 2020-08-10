@@ -38,18 +38,30 @@ const ImageCard = (props) => {
     },
     currentView: props.state.currentImgStyle,
     tester: {
-      height: '100%',
+      backgroundImage: `url(${props.state.currentImg.url})`,
+      backgroundSize: 'contain',
+      backgroundRepeat: 'no-repeat',
+      height: 'auto',
+      width: 'auto',
+      maxHeight: '100%',
+      maxWidth: '100%',
+    },
+    tester2: {
+      backgroundImage: `url(${props.state.currentImg.url})`,
+      backgroundSize: 'cover',
+      bacgroundSize: 'auto',
+      backgroundRepeat: 'no-repeat',
     }
   });
-  const classes = useStyles();
 
+  const classes = useStyles();
 
   return (
     <div>
       {props.state.isLoading
         ? <h1>Loading...</h1>
         :
-        <Card className={classes.bigCard} elevation={0} variant='outlined'>
+        <Card  className={classes.bigCard} elevation={0} variant='outlined'>
           <div style={{ width: '100%', cursor: 'default' }} >
             {(props.state.currentImgStyleName === 'defaultView')
               ? <ZoomInIcon style={{ marginLeft: '95%', marginTop: '5px', cursor: 'pointer' }} onClick={props.changeView} />
@@ -60,7 +72,7 @@ const ImageCard = (props) => {
                 {props.state.isLoading
                   ? <h1>Loading...</h1>
                   : <Grid container direction='column'>
-                    <Grid style={{ marginLeft: '5px' }} container>
+                    <Grid style={{ marginLeft: '5px' }} container >
                       {props.state.thumbIsLoading
                         ? <h6></h6>
                         : <ImageThumbnails pickImage={props.pickImage} style={{ cursor: 'pointer' }} state={props.state} />
@@ -71,7 +83,6 @@ const ImageCard = (props) => {
                         image={props.state.currentImg.url}
                         onClick={props.changeView}
                       />
-
                     </Grid>
                   </Grid>
                 }

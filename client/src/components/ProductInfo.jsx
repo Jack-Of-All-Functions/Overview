@@ -6,6 +6,8 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { sizing } from '@material-ui/system';
+import Rating from '@material-ui/lab/Rating';
+import Box from '@material-ui/core/Box';
 
 const useStyles = makeStyles({
   root: {
@@ -28,9 +30,21 @@ const useStyles = makeStyles({
 
 });
 
+let averageRating = (ratings) => {
+  let sum = 0;
+  let total = 0;
+  for (let key in ratings) {
+    sum = sum + (key * ratings[key]);
+    total = total + ratings[key];
+  }
+  return sum / total;
+}
+
 
 const ProductInfoCard = (props) => {
   const classes = useStyles();
+
+  let rating = averageRating(props.state.productRatings);
 
   return (
     <Card className={classes.root} variant='outlined'>
@@ -40,12 +54,13 @@ const ProductInfoCard = (props) => {
           ? <h4>Loading...</h4>
           : <div>
             <div>
-              <p>Ratings</p>
+              <Rating name="half-rating-read" precision={0.25} value={rating} size='small' readOnly style={{ marginBottom: '0px' }} />
+              <h5 style={{ marginBottom: '0px', marginTop: '0px', textDecoration: 'underline' }}>Read All Reviews</h5>
             </div>
             <div>
-              <p style={{marginBottom: '0px'}}>{props.state.currentProduct.category}</p>
-              <h1 style={{marginBottom: '0px', marginTop: '2px'}}>{props.state.currentProduct.name}</h1>
-              <p style={{marginBottom: '0px', marginTop: '2px'}}>${props.state.currentProduct.default_price}</p>
+              <p style={{ marginBottom: '0px' }}>{props.state.currentProduct.category}</p>
+              <h1 style={{ marginBottom: '0px', marginTop: '2px' }}>{props.state.currentProduct.name}</h1>
+              <p style={{ marginBottom: '0px', marginTop: '2px' }}>${props.state.currentProduct.default_price}</p>
             </div>
           </div>
         }
