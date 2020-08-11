@@ -14,6 +14,8 @@ import ZoomOutMapIcon from '@material-ui/icons/ZoomOutMap';
 import { Icon } from '@material-ui/core';
 import ImageThumbnails from './ImageThumbnails.jsx'
 import { Grid, Paper } from '@material-ui/core';
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 
 
 const ImageCard = (props) => {
@@ -77,12 +79,14 @@ const ImageCard = (props) => {
                         ? <h6></h6>
                         : <ImageThumbnails pickImage={props.pickImage} style={{ cursor: 'pointer' }} state={props.state} />
                       }
+                      <ArrowBackIosIcon style={{ marginLeft: '10%', marginTop: '40%', cursor: 'pointer'}} onClick={props.prevImage}/>
                       <CardMedia
                         className={classes.currentView}
                         component='img'
                         image={props.state.currentImg.url}
                         onClick={props.changeView}
                       />
+                      <ArrowForwardIosIcon style={{marginLeft: '10px', marginTop: '40%', cursor: 'pointer'}} onClick={props.nextImage}/>
                     </Grid>
                   </Grid>
                 }

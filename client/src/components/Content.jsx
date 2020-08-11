@@ -11,8 +11,6 @@ import { sizing } from '@material-ui/system'
 
 
 
-
-
 const Content = (props) => {
 
   const useStyles = makeStyles({
@@ -30,8 +28,11 @@ const Content = (props) => {
       maxWidth: '75%',
       cursor: 'pointer',
     },
-    imageGridEnlarged: {
-
+    imageGridExpanded: {
+      maxHeight: '75%',
+      maxWidth: '100%',
+      height: 'auto',
+      width: 'auto',
     },
     tripleGrid: {
       height: 'auto',
@@ -54,26 +55,38 @@ const Content = (props) => {
   return (
 
     <Grid className={classes.root} container spacing={1}>
-      <Grid className={classes.imageGridDefault} item xs={8}>
-        <ImageCard state={props.state} changeView={props.changeView} pickImage={props.pickImage} />
-      </Grid>
 
-      <Grid className={classes.tripleGrid} item xs={4}>
-        <ProductInfoCard state={props.state}/>
-        <StyleSelectorCard />
-        <CartCard />
-      </Grid>
+      {props.state.currentImgStyleName === 'defaultView'
+        ? <Grid className={classes.imageGridDefault} item xs={8}>
+          <ImageCard state={props.state} changeView={props.changeView} pickImage={props.pickImage} nextImage={props.nextImage} prevImage={props.prevImage}/>
+        </Grid>
+        : <Grid className={classes.imageGridExpanded} item xs={12}>
+          <ImageCard state={props.state} changeView={props.changeView} pickImage={props.pickImage} nextImage={props.nextImage} prevImage={props.prevImage}/>
+        </Grid>
+      }
+
+
+
+      {props.state.currentImgStyleName === 'defaultView'
+        ? <Grid className={classes.tripleGrid} item xs={4}>
+          <ProductInfoCard state={props.state} />
+          <StyleSelectorCard />
+          <CartCard />
+        </Grid>
+        : <div />
+      }
+
 
       <Grid className={classes.infoGrid} item xs={8}>
         <ProductDescCard state={props.state} />
       </Grid>
       <div>
-      {props.state.productFeatures
-        ? <Grid className={classes.infoGrid} item xs={4}>
-          <ProductFeaturesCard state={props.state} />
+        {props.state.productFeatures
+          ? <Grid className={classes.infoGrid} item xs={4}>
+            <ProductFeaturesCard state={props.state} />
           </Grid>
-        : <div></div>
-      }
+          : <div></div>
+        }
       </div>
     </Grid>
 
