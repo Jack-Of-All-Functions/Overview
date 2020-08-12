@@ -19,6 +19,7 @@ class App extends React.Component {
       productRatings: {},
       currentStyle: '',
       currentStyleIndex: '',
+      currentStyleImgIndex: '',
       onSale: false,
       styleImages: '',
       currentImg: '',
@@ -95,6 +96,7 @@ class App extends React.Component {
         this.setState({
           currentStyle: this.state.productStyles[0],
           currentStyleIndex: 0,
+          currentStyleImgIndex: 0,
         })
       })
       .then(() => {
@@ -154,36 +156,42 @@ class App extends React.Component {
   pickImage(index) {
     this.setState({
       currentImg: this.state.styleImages[index],
-      currentStyleIndex: index,
+      currentStyleImgIndex: index,
     })
   }
 
   prevImage() {
     {
-      this.state.styleImages[this.state.currentStyleIndex - 1] !== undefined
+      this.state.styleImages[this.state.currentStyleImgIndex - 1] !== undefined
       ? this.setState({
-        currentStyleIndex: this.state.currentStyleIndex - 1,
-        currentImg: this.state.styleImages[this.state.currentStyleIndex - 1],
+        currentStyleImgIndex: this.state.currentStyleImgIndex - 1,
+        currentImg: this.state.styleImages[this.state.currentStyleImgIndex - 1],
       })
       : this.setState({
         currentImg: this.state.styleImages[this.state.styleImages.length - 1],
-        currentStyleIndex: this.state.styleImages.length - 1,
+        currentStyleImgIndex: this.state.styleImages.length - 1,
       })
     }
   }
 
   nextImage() {
     {
-      this.state.styleImages[this.state.currentStyleIndex + 1] !== undefined
+      this.state.styleImages[this.state.currentStyleImgIndex + 1] !== undefined
       ? this.setState({
-        currentStyleIndex: this.state.currentStyleIndex + 1,
-        currentImg: this.state.styleImages[this.state.currentStyleIndex + 1]
+        currentStyleImgIndex: this.state.currentStyleImgIndex + 1,
+        currentImg: this.state.styleImages[this.state.currentStyleImgIndex + 1]
       })
     : this.setState({
-        currentStyleIndex: 0,
+        currentStyleImgIndex: 0,
         currentImg: this.state.styleImages[0]
       })
     }
+  }
+
+  stylePicker(index) {
+    this.setState({
+      currentStyle: this.state.productStyles[index]
+    })
   }
 
   render() {
@@ -196,7 +204,14 @@ class App extends React.Component {
           <h3 style={{ textAlign: 'center' }}>Announcements Will Go Here</h3>
         </Grid>
         <Grid id='content' container>
-          <Content state={this.state} pickImage={this.pickImage.bind(this)} changeView={this.changeView.bind(this)} nextImage={this.nextImage.bind(this)} prevImage={this.prevImage.bind(this)} />
+          <Content
+            state={this.state}
+            pickImage={this.pickImage.bind(this)}
+            changeView={this.changeView.bind(this)}
+            nextImage={this.nextImage.bind(this)}
+            prevImage={this.prevImage.bind(this)}
+            stylePicker={this.stylePicker.bind(this)}
+          />
         </Grid>
       </Grid>
     )
