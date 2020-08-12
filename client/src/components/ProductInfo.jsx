@@ -8,6 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import { sizing } from '@material-ui/system';
 import Rating from '@material-ui/lab/Rating';
 import Box from '@material-ui/core/Box';
+import { InlineShareButtons } from 'sharethis-reactjs';
 
 
 const ProductInfoCard = (props) => {
@@ -35,12 +36,15 @@ const ProductInfoCard = (props) => {
 
   const classes = useStyles();
 
+  let reviewTotal = 0;
+
   let averageRating = (ratings) => {
     let sum = 0;
     let total = 0;
     for (let key in ratings) {
       sum = sum + (key * ratings[key]);
       total = total + ratings[key];
+      reviewTotal = reviewTotal + ratings[key];
     }
     return sum / total;
   }
@@ -56,18 +60,46 @@ const ProductInfoCard = (props) => {
           : <div>
             <div>
               <Rating id='rating' name="half-rating-read" precision={0.25} value={rating} size='small' readOnly style={{ marginBottom: '0px' }} />
-              <h5 style={{ marginBottom: '0px', marginTop: '0px', textDecoration: 'underline' }}>Read All Reviews</h5>
+              <h5 style={{ marginBottom: '0px', marginTop: '0px', textDecoration: 'underline' }}>Read All ({reviewTotal}) Reviews</h5>
             </div>
-            <div>
-              <p id='productCategory' style={{ marginBottom: '0px' }}>{props.state.currentProduct.category}</p>
-              <h1 id='productName' style={{ marginBottom: '0px', marginTop: '2px' }}>{props.state.currentProduct.name}</h1>
-              <p id='productPrice' style={{ marginBottom: '0px', marginTop: '2px' }}>${props.state.currentProduct.default_price}</p>
+            {props.state.currentStyle.sale_price !== 0
+              ? <div>
+                <p id='productCategory' style={{ marginBottom: '0px' }}>{props.state.currentProduct.category}</p>
+                <h1 id='productName' style={{ marginBottom: '0px', marginTop: '2px' }}>{props.state.currentProduct.name}</h1>
+                <p id='productPrice' style={{ marginBottom: '0px', marginTop: '2px' }}>${props.state.currentStyle.original_price}</p>
+              </div>
+              : <div>
+                <p id='productCategory' style={{ marginBottom: '0px' }}>{props.state.currentProduct.category}</p>
+                <h1 id='productName' style={{ marginBottom: '0px', marginTop: '2px' }}>{props.state.currentProduct.name}</h1>
+                <p id='productPrice' style={{ marginBottom: '0px', marginTop: '2px', color: 'red' }}>${props.state.currentStyle.sale_price}</p>
+                <p id='productPrice' style={{ marginBottom: '0px', marginTop: '2px', textDecoration: 'line-through' }}>${props.state.currentStyle.original_price}</p>
+              </div>
+            }
+            <div id='share' style={{marginTop: '10px'}}>
+              <InlineShareButtons
+                config={{
+                  alignment: 'left',
+                  color: 'social',
+                  enabled: 'true',
+                  font_size: '10',
+                  labels: 'cta',
+                  language: 'en',
+                  networks: [
+                    'facebook',
+                    'twitter',
+                    'pinterest'
+                  ],
+                  padding: 12,
+                  radius: 4,
+                  size: 20
+                }}
+                />
             </div>
           </div>
         }
 
       </CardContent>
-    </Card>
+    </Card >
   );
 }
 
