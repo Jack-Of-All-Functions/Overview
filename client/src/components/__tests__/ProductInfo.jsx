@@ -19,7 +19,7 @@ import ReactTestUtils from 'react-dom/test-utils';
 
 configure({ adapter: new Adapter() });
 
-it('Renders the appropriate category, name, and price', () => {
+it('Renders the appropriate category, name, and non-sale price', () => {
   let wrapper;
   let shallow = createShallow();
   let render = createRender();
@@ -33,7 +33,11 @@ it('Renders the appropriate category, name, and price', () => {
       name: 'Test Pants',
       default_price: 100,
     },
-
+    currentStyle: {
+      original_price: 100,
+      sale_price: 0,
+    },
+    onSale: false,
   };
 
   const firstTest = mount(
@@ -43,6 +47,36 @@ it('Renders the appropriate category, name, and price', () => {
   expect(firstTest.find('#productCategory').text()).toBe('Pants');
   expect(firstTest.find('#productName').text()).toBe('Test Pants');
   expect(firstTest.find('#productPrice').text()).toBe('$100');
+
+})
+
+it('Renders the appropriate category, name, and on-sale price', () => {
+  let wrapper;
+  let shallow = createShallow();
+  let render = createRender();
+  let mount = createMount();
+
+  let props = {
+    // isLoading: false,
+    productRatings: { 2: 2, 3: 1, 4: 2 },
+    currentProduct: {
+      category: 'Pants',
+      name: 'Test Pants',
+      default_price: 100,
+    },
+    currentStyle: {
+      original_price: 100,
+      sale_price: 40,
+    },
+    onSale: true,
+  };
+
+  const firstTest = mount(
+    <ProductInfoCard state={props} />
+  );
+
+  expect(firstTest.find('#productPrice').text()).toBe('$100');
+  expect(firstTest.find('#salePrice').text()).toBe('$40');
 
 })
 
@@ -58,6 +92,10 @@ it('Calculates average rating correctly', () => {
       category: 'Pants',
       name: 'Test Pants',
       default_price: 100,
+    },
+    currentStyle: {
+      original_price: 100,
+      sale_price: 0,
     },
     isLoading: false,
   };
