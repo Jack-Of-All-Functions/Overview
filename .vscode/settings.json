@@ -9,5 +9,6 @@
   "files.trimTrailingWhitespace": true,
   "javascript.suggest.enabled": true,
   "javascript.updateImportsOnFileMove.enabled": "always",
-  "javascript.validate.enable": false
+  "javascript.validate.enable": false,
+  "files.autoSave": "onFocusChange"
 }

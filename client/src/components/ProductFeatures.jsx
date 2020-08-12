@@ -41,7 +41,11 @@ const ProductFeaturesCard = (props) => {
         {props.state.isLoading
           ? <h4>Loading...</h4>
           : <div>
-              <p style={{marginBottom: '0px'}}>No Additional Features</p>
+            {props.state.productFeatures
+             ? <p style={{marginBottom: '0px'}}>{props.state.productFeatures}</p>
+             : <p style={{marginBottom: '0px'}}></p>
+            }
+
               {/* <p style={{marginBottom: '0px'}}>{props.state.currentProduct.features[1]}</p> */}
           </div>
         }

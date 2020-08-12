@@ -14,6 +14,8 @@ import ZoomOutMapIcon from '@material-ui/icons/ZoomOutMap';
 import { Icon } from '@material-ui/core';
 import ImageThumbnails from './ImageThumbnails.jsx'
 import { Grid, Paper } from '@material-ui/core';
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 
 
 const ImageCard = (props) => {
@@ -38,18 +40,30 @@ const ImageCard = (props) => {
     },
     currentView: props.state.currentImgStyle,
     tester: {
-      height: '100%',
+      backgroundImage: `url(${props.state.currentImg.url})`,
+      backgroundSize: 'contain',
+      backgroundRepeat: 'no-repeat',
+      height: 'auto',
+      width: 'auto',
+      maxHeight: '100%',
+      maxWidth: '100%',
+    },
+    tester2: {
+      backgroundImage: `url(${props.state.currentImg.url})`,
+      backgroundSize: 'cover',
+      bacgroundSize: 'auto',
+      backgroundRepeat: 'no-repeat',
     }
   });
-  const classes = useStyles();
 
+  const classes = useStyles();
 
   return (
     <div>
       {props.state.isLoading
         ? <h1>Loading...</h1>
         :
-        <Card className={classes.bigCard} elevation={0} variant='outlined'>
+        <Card  className={classes.bigCard} elevation={0} variant='outlined'>
           <div style={{ width: '100%', cursor: 'default' }} >
             {(props.state.currentImgStyleName === 'defaultView')
               ? <ZoomInIcon style={{ marginLeft: '95%', marginTop: '5px', cursor: 'pointer' }} onClick={props.changeView} />
@@ -60,18 +74,19 @@ const ImageCard = (props) => {
                 {props.state.isLoading
                   ? <h1>Loading...</h1>
                   : <Grid container direction='column'>
-                    <Grid style={{ marginLeft: '5px' }} container>
+                    <Grid style={{ marginLeft: '5px' }} container >
                       {props.state.thumbIsLoading
                         ? <h6></h6>
                         : <ImageThumbnails pickImage={props.pickImage} style={{ cursor: 'pointer' }} state={props.state} />
                       }
+                      <ArrowBackIosIcon style={{ marginLeft: '10%', marginTop: '40%', cursor: 'pointer'}} onClick={props.prevImage}/>
                       <CardMedia
                         className={classes.currentView}
                         component='img'
                         image={props.state.currentImg.url}
                         onClick={props.changeView}
                       />
-
+                      <ArrowForwardIosIcon style={{marginLeft: '10px', marginTop: '40%', cursor: 'pointer'}} onClick={props.nextImage}/>
                     </Grid>
                   </Grid>
                 }
@@ -79,7 +94,6 @@ const ImageCard = (props) => {
             </CardContent>
           </div>
           <CardActions>
-
           </CardActions>
         </Card>
 
