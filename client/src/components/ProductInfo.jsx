@@ -51,8 +51,6 @@ const ProductInfoCard = (props) => {
 
   let rating = averageRating(props.state.productRatings);
 
-
-
   return (
     <Card className={classes.root} variant='outlined'>
       <CardContent>

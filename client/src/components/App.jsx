@@ -112,7 +112,6 @@ class App extends React.Component {
       .then(() => {
         this.onSale();
       })
-
   }
 
   onSale() {
@@ -186,7 +185,6 @@ class App extends React.Component {
       })
     }
   }
-
 
   render() {
     return (
