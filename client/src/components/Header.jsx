@@ -4,7 +4,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import { makeStyles } from '@material-ui/styles';
 
 const useStyles = makeStyles(() => ({
-  typeographyStyles: {
+  mainHeader: {
     flex: 1
   }
 }));
@@ -14,7 +14,7 @@ const Header = () => {
   return (
     <AppBar position='static'>
       <Toolbar>
-        <Typography className={classes.typeographyStyles}>
+        <Typography id='logo' className={classes.mainHeader}>
           Logo
         </Typography>
         <SearchIcon />

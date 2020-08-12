@@ -94,7 +94,6 @@ const ImageCard = (props) => {
             </CardContent>
           </div>
           <CardActions>
-
           </CardActions>
         </Card>
 

@@ -77,7 +77,7 @@ class App extends React.Component {
         this.getRatings();
       })
       .catch((err) => {
-        console.log(err)
+        console.log(err);
       })
   };
 

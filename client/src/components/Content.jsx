@@ -49,23 +49,19 @@ const Content = (props) => {
 
   });
 
-
   const classes = useStyles();
 
   return (
-
     <Grid className={classes.root} container spacing={1}>
 
       {props.state.currentImgStyleName === 'defaultView'
-        ? <Grid className={classes.imageGridDefault} item xs={8}>
+        ? <Grid className={classes.imageGridDefault} item xs={12} sm={8}>
           <ImageCard state={props.state} changeView={props.changeView} pickImage={props.pickImage} nextImage={props.nextImage} prevImage={props.prevImage}/>
         </Grid>
         : <Grid className={classes.imageGridExpanded} item xs={12}>
           <ImageCard state={props.state} changeView={props.changeView} pickImage={props.pickImage} nextImage={props.nextImage} prevImage={props.prevImage}/>
         </Grid>
       }
-
-
 
       {props.state.currentImgStyleName === 'defaultView'
         ? <Grid className={classes.tripleGrid} item xs={4}>
@@ -76,10 +72,10 @@ const Content = (props) => {
         : <div />
       }
 
-
       <Grid className={classes.infoGrid} item xs={8}>
         <ProductDescCard state={props.state} />
       </Grid>
+
       <div>
         {props.state.productFeatures
           ? <Grid className={classes.infoGrid} item xs={4}>
@@ -88,8 +84,8 @@ const Content = (props) => {
           : <div></div>
         }
       </div>
-    </Grid>
 
+    </Grid>
   )
 };
 
