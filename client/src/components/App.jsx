@@ -6,7 +6,6 @@ import Header from './Header.jsx'
 import Content from './Content.jsx'
 
 
-
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -20,6 +19,7 @@ class App extends React.Component {
       productRatings: {},
       currentStyle: '',
       currentStyleIndex: '',
+      onSale: false,
       styleImages: '',
       currentImg: '',
       imageStyles: {
@@ -109,7 +109,18 @@ class App extends React.Component {
           thumbIsLoading: false,
         })
       })
+      .then(() => {
+        this.onSale();
+      })
 
+  }
+
+  onSale() {
+    if (parseInt(this.state.currentStyle.sale_price) > 0) {
+      this.setState({
+        onSale: true,
+      })
+    }
   }
 
   changeView() {
@@ -175,6 +186,7 @@ class App extends React.Component {
       })
     }
   }
+
 
   render() {
     return (
