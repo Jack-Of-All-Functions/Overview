@@ -14,22 +14,18 @@ const ImageThumbnails = (props) => {
   const listedThumbs = thumbnails.map((thumbnail, index) =>
 
     <div key={index}>
-    <ThemeProvider theme={theme}>
       {props.state.currentImg === props.state.styleImages[index]
-      ? <img style={{ cursor: 'pointer', boxShadow: '0 0 2pt 1pt #1e88e5', outlineColor: '#1e88e5', borderRadius: '5px' }} height='75px' width='50px' src={thumbnail.thumbnail_url} onClick={() => { props.pickImage(index) }} />
-      : <img style={{ cursor: 'pointer', borderRadius: '5px' }} height='75px' width='50px' src={thumbnail.thumbnail_url} onClick={() => { props.pickImage(index) }} />
+      ? <img style={{ cursor: 'pointer', boxShadow: '0 0 2pt 1pt #1e88e5', outlineColor: '#1e88e5', borderRadius: '5px' }} height='50px' width='50px' src={thumbnail.thumbnail_url} onClick={() => { props.pickImage(index) }} />
+      : <img style={{ cursor: 'pointer', borderRadius: '5px' }} height='50px' width='50px' src={thumbnail.thumbnail_url} onClick={() => { props.pickImage(index) }} />
       }
-    </ThemeProvider>
     </div>
   );
-
 
   return (
     <div>
       {listedThumbs}
     </div>
   )
-
 }
 
 export default ImageThumbnails;

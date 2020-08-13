@@ -27,24 +27,21 @@ class App extends React.Component {
         defaultView: {
           display: 'block',
           textAlign: 'center',
-          maxWidth: '50%',
-          maxHeight: '50%',
-          width: 'auto',
-          height: 'auto',
+          maxWidth: '640px',
+          maxHeight: '640px',
+          width: '50%',
+          height: '50%',
           marginLeft: '5px',
           borderRadius: '5px',
-          cursor: 'zoom-in',
         },
         enlargedView: {
           display: 'inline-block',
           alignSelf: 'center',
-          maxWidth: '75%',
-          maxHeight: '80%',
+          maxWidth: '100%',
+          maxHeight: '100%',
           width: 'auto',
           height: 'auto',
           borderRadius: '5px',
-          cursor: 'zoom-out',
-          // marginLeft: '10%'
         }
       },
       currentImgStyleName: 'defaultView',
@@ -121,15 +118,12 @@ class App extends React.Component {
   changeView() {
     if (this.state.currentImgStyleName === 'defaultView') {
       this.setState({
-        // thumbIsLoading: true,
-        currentImgStyle: this.state.imageStyles.enlargedView,
         currentImgStyleName: 'enlargedView',
       })
     }
     if (this.state.currentImgStyleName === 'enlargedView') {
       this.setState({
         thumbIsLoading: false,
-        currentImgStyle: this.state.imageStyles.defaultView,
         currentImgStyleName: 'defaultView',
       })
     }
@@ -188,7 +182,7 @@ class App extends React.Component {
       currentStyle: this.state.productStyles[index],
       currentStyleIndex: index,
       styleImages: this.state.productStyles[index].photos,
-      currentImg: this.state.productStyles[index].photos[0],
+      currentImg: this.state.productStyles[index].photos[this.state.currentStyleImgIndex],
     })
   }
 
