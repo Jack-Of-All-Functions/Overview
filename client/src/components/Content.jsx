@@ -66,7 +66,7 @@ const Content = (props) => {
       {props.state.currentImgStyleName === 'defaultView'
         ? <Grid className={classes.tripleGrid} item xs={4}>
           <ProductInfoCard state={props.state} />
-          <StyleSelectorCard state={props.state}/>
+          <StyleSelectorCard state={props.state} stylePicker={props.stylePicker}/>
           <CartCard />
         </Grid>
         : <div />

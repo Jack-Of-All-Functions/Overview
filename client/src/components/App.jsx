@@ -2,8 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 import { Grid } from '@material-ui/core';
-import Header from './Header.jsx'
-import Content from './Content.jsx'
+import Header from './Header.jsx';
+import Content from './Content.jsx';
 
 
 class App extends React.Component {
@@ -11,6 +11,7 @@ class App extends React.Component {
     super(props);
     this.state = {
       products: [],
+      currentProductIndex: '',
       currentProduct: '',
       productId: '',
       productDesc: '',
@@ -63,14 +64,15 @@ class App extends React.Component {
         this.setState({
           products: data.data,
           isLoading: false,
+          currentProductIndex: 0,
         })
       })
       .then(() => {
         this.setState({
-          currentProduct: this.state.products[0],
-          productId: this.state.products[0].id,
-          productDesc: this.state.products[0].description,
-          productFeatures: this.state.products[0].features,
+          currentProduct: this.state.products[this.state.currentProductIndex],
+          productId: this.state.products[this.state.currentProductIndex].id,
+          productDesc: this.state.products[this.state.currentProductIndex].description,
+          productFeatures: this.state.products[this.state.currentProductIndex].features,
         })
       })
       .then(() => {
@@ -90,13 +92,13 @@ class App extends React.Component {
       .then((data) => {
         this.setState({
           productStyles: data.data.results,
+          currentStyleIndex: 0,
+          currentStyleImgIndex: 0,
         })
       })
       .then(() => {
         this.setState({
-          currentStyle: this.state.productStyles[0],
-          currentStyleIndex: 0,
-          currentStyleImgIndex: 0,
+          currentStyle: this.state.productStyles[this.state.currentStyleIndex],
         })
       })
       .then(() => {
@@ -106,7 +108,7 @@ class App extends React.Component {
       })
       .then(() => {
         this.setState({
-          currentImg: this.state.styleImages[0],
+          currentImg: this.state.styleImages[this.state.currentStyleImgIndex],
           currentImgStyle: this.state.imageStyles.defaultView,
           thumbIsLoading: false,
         })
@@ -156,6 +158,7 @@ class App extends React.Component {
   pickImage(index) {
     this.setState({
       currentImg: this.state.styleImages[index],
+      // currentStyleIndex: index,
       currentStyleImgIndex: index,
     })
   }
@@ -190,7 +193,10 @@ class App extends React.Component {
 
   stylePicker(index) {
     this.setState({
-      currentStyle: this.state.productStyles[index]
+      currentStyle: this.state.productStyles[index],
+      currentStyleIndex: index,
+      styleImages: this.state.productStyles[index].photos,
+      currentImg: this.state.productStyles[index].photos[0],
     })
   }
 
