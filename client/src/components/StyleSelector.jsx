@@ -21,7 +21,6 @@ const useStyles = makeStyles({
   },
 });
 
-
 const StyleSelectorCard = (props) => {
   const classes = useStyles();
 
@@ -57,7 +56,7 @@ const StyleSelectorCard = (props) => {
                     }}
                     badgeContent={<CheckCircleIcon style={{ width: '15px', height: '15px' }} />}
                   >
-                    <Avatar src={tile} style={{ width: '50px', height: '50px', border: 'solid #1e88e5', cursor: 'pointer' }} onClick={() => {props.stylePicker(index)}}/>
+                    <Avatar src={tile} style={{ width: '50px', height: '50px', border: 'solid #1e88e5', cursor: 'pointer' }} onClick={() => { props.stylePicker(index) }} />
                   </Badge>
                   : <Badge
                     overlap='circle'
@@ -66,10 +65,9 @@ const StyleSelectorCard = (props) => {
                       horizontal: 'right',
                     }}
                   >
-                    <Avatar src={tile} style={{ width: '50px', height: '50px', border: 'solid #1e88e5', cursor: 'pointer' }} onClick={() => {props.stylePicker(index)}}/>
+                    <Avatar src={tile} style={{ width: '50px', height: '50px', border: 'solid #1e88e5', cursor: 'pointer' }} onClick={() => { props.stylePicker(index) }} />
                   </Badge>
                 }
-
               </GridListTile>
             )}
           </GridList>

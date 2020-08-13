@@ -21,7 +21,6 @@ class App extends React.Component {
       currentStyle: '',
       currentStyleIndex: '',
       currentStyleImgIndex: '',
-      onSale: false,
       styleImages: '',
       currentImg: '',
       imageStyles: {
@@ -58,13 +57,17 @@ class App extends React.Component {
   componentDidMount() {
     axios({
       method: 'get',
-      url: 'http://52.26.193.201:3000/products/list',
+      url: 'http://52.26.193.201:3000/products/list/',
+      params: {
+        page: 1,
+        count: 5,
+      }
     })
       .then((data) => {
         this.setState({
           products: data.data,
           isLoading: false,
-          currentProductIndex: 0,
+          currentProductIndex: 4,
         })
       })
       .then(() => {
@@ -113,17 +116,6 @@ class App extends React.Component {
           thumbIsLoading: false,
         })
       })
-      .then(() => {
-        this.onSale();
-      })
-  }
-
-  onSale() {
-    if (parseInt(this.state.currentStyle.sale_price) > 0) {
-      this.setState({
-        onSale: true,
-      })
-    }
   }
 
   changeView() {
