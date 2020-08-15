@@ -14,6 +14,7 @@ class App extends React.Component {
       currentProductIndex: '',
       currentProduct: '',
       productId: '',
+      productInfo: '',
       productDesc: '',
       productStyles: '',
       productFeatures: '',
@@ -30,7 +31,7 @@ class App extends React.Component {
           maxWidth: '640px',
           maxHeight: '640px',
           width: '50%',
-          height: '50%',
+          height: '100%',
           marginLeft: '5px',
           borderRadius: '5px',
         },
@@ -78,6 +79,7 @@ class App extends React.Component {
       .then(() => {
         this.grabMyProduct();
         this.getRatings();
+        this.grabFeatures();
       })
       .catch((err) => {
         console.log(err);
@@ -113,6 +115,19 @@ class App extends React.Component {
           thumbIsLoading: false,
         })
       })
+  }
+
+  grabFeatures() {
+    axios({
+      method: 'get',
+      url: `http://52.26.193.201:3000/products/${this.state.productId}`
+    })
+    .then((data) => {
+      this.setState({
+        productInfo: data.data,
+        productFeatures: data.data.features,
+      })
+    })
   }
 
   changeView() {

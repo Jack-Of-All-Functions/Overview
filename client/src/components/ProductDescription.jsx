@@ -9,23 +9,10 @@ import { sizing } from '@material-ui/system'
 
 const useStyles = makeStyles({
   root: {
-    height: 'auto',
-  },
-  bullet: {
-    display: 'inline-block',
-    margin: '0 2px',
-    transform: 'scale(0.8)',
-  },
-  title: {
-    fontSize: 14,
-  },
-  pos: {
-    marginBottom: 'auto',
-  },
-  bigCard: {
     height: '100%',
-  }
-
+    minHeight: '100%',
+    maxHeight: '100%',
+  },
 });
 
 

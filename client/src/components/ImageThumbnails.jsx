@@ -15,14 +15,14 @@ const ImageThumbnails = (props) => {
 
     <div key={index}>
       {props.state.currentImg === props.state.styleImages[index]
-      ? <img style={{ cursor: 'pointer', boxShadow: '0 0 2pt 1pt #1e88e5', outlineColor: '#1e88e5', borderRadius: '5px' }} height='50px' width='50px' src={thumbnail.thumbnail_url} onClick={() => { props.pickImage(index) }} />
-      : <img style={{ cursor: 'pointer', borderRadius: '5px' }} height='50px' width='50px' src={thumbnail.thumbnail_url} onClick={() => { props.pickImage(index) }} />
+      ? <img style={{ margin: '1px', cursor: 'pointer', boxShadow: '0 0 2pt 1pt #1e88e5', outlineColor: '#1e88e5', borderRadius: '5px' }} height='75px' width='50px' src={thumbnail.thumbnail_url} onClick={() => { props.pickImage(index) }} />
+      : <img style={{ margin: '3px', cursor: 'pointer', borderRadius: '5px' }} height='75px' width='50px' src={thumbnail.thumbnail_url} onClick={() => { props.pickImage(index) }} />
       }
     </div>
   );
 
   return (
-    <div>
+    <div  style={{height: '600px', width: '55px', overflow: 'scroll'}}>
       {listedThumbs}
     </div>
   )

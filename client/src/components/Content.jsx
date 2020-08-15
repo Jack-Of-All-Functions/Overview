@@ -8,6 +8,7 @@ import CartCard from './AddToCart.jsx';
 import { Grid, Paper } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { sizing } from '@material-ui/system'
+import Box from '@material-ui/core/Box'
 
 
 
@@ -15,15 +16,12 @@ const Content = (props) => {
 
   const useStyles = makeStyles({
     root: {
-      // border: 'solid',
-      height: '100%',
-      // maxHeight: '250px',
-      alignItems: 'stretch',
-      display: 'flex',
+      // padding: '4px',
+      height: '75%'
     },
     imageGridDefault: {
       maxHeight: '75%',
-      height: 'auto',
+      height: '100%',
       width: 'auto',
       maxWidth: '75%',
       cursor: 'pointer',
@@ -35,16 +33,17 @@ const Content = (props) => {
       width: 'auto',
     },
     tripleGrid: {
-      height: 'auto',
+      // height: 'auto',
       maxHeight: '75%',
       width: 'auto',
       maxWidth: '75%',
     },
     infoGrid: {
-      height: 'auto',
-      maxHeight: '25%',
-      width: 'auto',
-      maxWidth: '75%',
+      height: '25%',
+      // maxHeight: '25%',
+      // minHeight: '25%',
+      // width: 'auto',
+      // maxWidth: '75%',
     }
 
   });
@@ -52,38 +51,44 @@ const Content = (props) => {
   const classes = useStyles();
 
   return (
-    <Grid className={classes.root} container spacing={1}>
+    <Grid className={classes.root} container spacing={1} >
 
-      {props.state.currentImgStyleName === 'defaultView'
-        ? <Grid className={classes.imageGridDefault} item xs={12} sm={8}>
-          <ImageCard state={props.state} changeView={props.changeView} pickImage={props.pickImage} nextImage={props.nextImage} prevImage={props.prevImage}/>
+      {/* <Grid container spacing={1}> */}
+        {props.state.currentImgStyleName === 'defaultView'
+          ? <Grid className={classes.imageGridDefault} item xs={12} sm={8}>
+            <ImageCard state={props.state} changeView={props.changeView} pickImage={props.pickImage} nextImage={props.nextImage} prevImage={props.prevImage} />
+          </Grid>
+          : <Grid className={classes.imageGridExpanded} item xs={12}>
+            <ImageCard state={props.state} changeView={props.changeView} pickImage={props.pickImage} nextImage={props.nextImage} prevImage={props.prevImage} />
+          </Grid>
+        }
+
+        {props.state.currentImgStyleName === 'defaultView'
+          ? <Grid className={classes.tripleGrid} item xs={12} sm={4}>
+            <ProductInfoCard state={props.state} />
+            <StyleSelectorCard state={props.state} stylePicker={props.stylePicker} />
+            <CartCard />
+          </Grid>
+          : <div />
+        }
+      {/* </Grid> */}
+
+      {/* <Grid container spacing={1} display='flex'> */}
+        <Grid className={classes.infoGrid} item xs={12} sm={8}>
+          <ProductDescCard state={props.state} />
         </Grid>
-        : <Grid className={classes.imageGridExpanded} item xs={12}>
-          <ImageCard state={props.state} changeView={props.changeView} pickImage={props.pickImage} nextImage={props.nextImage} prevImage={props.prevImage}/>
-        </Grid>
-      }
-
-      {props.state.currentImgStyleName === 'defaultView'
-        ? <Grid className={classes.tripleGrid} item xs={4}>
-          <ProductInfoCard state={props.state} />
-          <StyleSelectorCard state={props.state} stylePicker={props.stylePicker}/>
-          <CartCard />
-        </Grid>
-        : <div />
-      }
-
-      <Grid className={classes.infoGrid} item xs={8}>
-        <ProductDescCard state={props.state} />
-      </Grid>
-
-      <div>
         {props.state.productFeatures
-          ? <Grid className={classes.infoGrid} item xs={4}>
+          ? <Grid className={classes.infoGrid} item xs={12} sm={4}>
             <ProductFeaturesCard state={props.state} />
           </Grid>
           : <div></div>
         }
-      </div>
+      {/* </Grid> */}
+
+
+
+
+
 
     </Grid>
   )
