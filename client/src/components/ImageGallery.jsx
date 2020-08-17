@@ -27,7 +27,6 @@ const ImageCard = (props) => {
       width: 'auto',
       cursor: 'zoom-in',
       background: `no-repeat center / contain url(${props.state.currentImg.url})`,
-      // backgroundSize: 'cover',
     },
     currentView: props.state.currentImgStyle,
   });

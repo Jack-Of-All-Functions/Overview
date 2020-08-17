@@ -12,7 +12,6 @@ const useStyles = makeStyles({
     height: '100%',
     minHeight: '100%',
     maxHeight: '100%',
-    // marginTop: '16px'
   }
 });
 

@@ -46,7 +46,7 @@ const StyleSelectorCard = (props) => {
           <h3 style={{ fontWeight: 'bold', marginTop: '0' }}>Style > {props.state.currentStyle.name}</h3>
           <GridList cellHeight={'auto'} cols={4} spacing={10}>
             {styleList.map((tile, index) =>
-              <GridListTile key={index} cols={tile.cols || 1}>
+              <GridListTile id={`StyleSelector${index}`} key={index} cols={tile.cols || 1}>
                 {index === props.state.currentStyleIndex
                   ? <Badge
                     overlap='circle'

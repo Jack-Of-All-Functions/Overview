@@ -55,17 +55,17 @@ class App extends React.Component {
   componentDidMount() {
     axios({
       method: 'get',
-      url: 'http://52.26.193.201:3000/products/list/',
-      params: {
-        page: 1,
-        count: 5,
-      }
+      url: 'http://52.26.193.201:3000/products/list',
+      // params: {
+      //   page: 1,
+      //   count: 5,
+      // }
     })
       .then((data) => {
         this.setState({
           products: data.data,
           isLoading: false,
-          currentProductIndex: 4,
+          currentProductIndex: 0,
         })
       })
       .then(() => {
@@ -73,7 +73,6 @@ class App extends React.Component {
           currentProduct: this.state.products[this.state.currentProductIndex],
           productId: this.state.products[this.state.currentProductIndex].id,
           productDesc: this.state.products[this.state.currentProductIndex].description,
-          productFeatures: this.state.products[this.state.currentProductIndex].features,
         })
       })
       .then(() => {
@@ -159,7 +158,6 @@ class App extends React.Component {
   pickImage(index) {
     this.setState({
       currentImg: this.state.styleImages[index],
-      // currentStyleIndex: index,
       currentStyleImgIndex: index,
     })
   }

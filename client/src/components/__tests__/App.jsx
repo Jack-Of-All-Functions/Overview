@@ -39,6 +39,11 @@ const mockProducts = [
   }
 ];
 
+const mockProductInfo = {
+  "product_id": "1",
+  "features": [{'fakeFeature1': 'fakeValue1'}, {'fakeFeature2': 'fakeValue2'}]
+}
+
 const mockReviews = {
   "product_id": "1",
   "ratings": {
@@ -101,29 +106,22 @@ const mockStyles = {
 
 jest.mock('axios', () => ({
   __esModule: true,
-  get: jest.fn((url) => {
-    if (url.url === 'http://52.26.193.201:3000/products/list') {
+  default: jest.fn((req) => {
+    if (req.url === 'http://52.26.193.201:3000/products/list') {
+      // console.log('GET PRODUCTS URL', req.url)
       return Promise.resolve({ data: mockProducts })
     }
-    if (url.url === `http://52.26.193.201:3000/products/1/styles`) {
+    if (req.url === `http://52.26.193.201:3000/products/1/styles`) {
+      // console.log('GET STYLES URL', req.url)
       return Promise.resolve({ data: mockStyles })
     }
-    if (url.url === `http://52.26.193.201:3000/reviews/1/meta`) {
+    if (req.url === `http://52.26.193.201:3000/reviews/1/meta`) {
+      // console.log('GET REVIEWS URL', req.url)
       return Promise.resolve({ data: mockReviews })
     }
-  }),
-  default: jest.fn((url) => {
-    if (url.url === 'http://52.26.193.201:3000/products/list') {
-      // console.log('GET PRODUCTS URL', url.url)
-      return Promise.resolve({ data: mockProducts })
-    }
-    if (url.url === `http://52.26.193.201:3000/products/1/styles`) {
-      // console.log('GET STYLES URL', url.url)
-      return Promise.resolve({ data: mockProducts })
-    }
-    if (url.url === `http://52.26.193.201:3000/reviews/1/meta`) {
-      // console.log('GET REVIEWS URL', url.url)
-      return Promise.resolve({ data: mockProducts })
+    if (req.url === `http://52.26.193.201:3000/products/1`) {
+      // console.log('GET PRODUCT INFO URL', req.url)
+      return Promise.resolve({ data: mockProductInfo })
     }
   })
 }));
@@ -176,6 +174,26 @@ describe('Testing for API Calls', () => {
   })
 
 });
+
+// describe('Testing style selector', () => {
+//   let wrapper;
+//   let shallow;
+//   let render;
+//   let mount;
+
+//   beforeAll(() => {
+//     shallow = createShallow();
+//     render = createRender();
+//     mount = createMount();
+//   });
+
+//   test('It should set the state to the current style on click', async () => {
+//     let wrapper = await mount(<App />);
+//     console.log(wrapper.state())
+//     wrapper.find('#StyleSelector1').simulate('click');
+//     expect(wrapper.state('currentStyleIndex')).toEqual(0);
+//   })
+// })
 
 
 

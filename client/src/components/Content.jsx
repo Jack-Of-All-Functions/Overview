@@ -16,7 +16,6 @@ const Content = (props) => {
 
   const useStyles = makeStyles({
     root: {
-      // padding: '4px',
       height: '75%'
     },
     imageGridDefault: {
@@ -33,17 +32,12 @@ const Content = (props) => {
       width: 'auto',
     },
     tripleGrid: {
-      // height: 'auto',
       maxHeight: '75%',
       width: 'auto',
       maxWidth: '75%',
     },
     infoGrid: {
       height: '25%',
-      // maxHeight: '25%',
-      // minHeight: '25%',
-      // width: 'auto',
-      // maxWidth: '75%',
     }
 
   });
@@ -53,7 +47,6 @@ const Content = (props) => {
   return (
     <Grid className={classes.root} container spacing={1} >
 
-      {/* <Grid container spacing={1}> */}
         {props.state.currentImgStyleName === 'defaultView'
           ? <Grid className={classes.imageGridDefault} item xs={12} sm={8}>
             <ImageCard state={props.state} changeView={props.changeView} pickImage={props.pickImage} nextImage={props.nextImage} prevImage={props.prevImage} />
@@ -71,9 +64,7 @@ const Content = (props) => {
           </Grid>
           : <div />
         }
-      {/* </Grid> */}
 
-      {/* <Grid container spacing={1} display='flex'> */}
         <Grid className={classes.infoGrid} item xs={12} sm={8}>
           <ProductDescCard state={props.state} />
         </Grid>
@@ -83,12 +74,6 @@ const Content = (props) => {
           </Grid>
           : <div></div>
         }
-      {/* </Grid> */}
-
-
-
-
-
 
     </Grid>
   )
