@@ -7,9 +7,9 @@ app.use(express.urlencoded({extended: true}));
 
 app.use(express.static(__dirname + '/../public'));
 
-// app.get('/', (req, res) => {
-//   res.send('Basics Are Starting')
-// })
+app.get('/', (req, res) => {
+  res.send('Basics Are Starting')
+})
 
 // app.get('http://52.26.193.201:3000/products/list', (req, res) => {
 //   res.send(res);

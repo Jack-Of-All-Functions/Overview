@@ -2,8 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 import { Grid } from '@material-ui/core';
-import Header from './Header.jsx'
-import Content from './Content.jsx'
+import Header from './Header.jsx';
+import Content from './Content.jsx';
 
 
 class App extends React.Component {
@@ -11,39 +11,38 @@ class App extends React.Component {
     super(props);
     this.state = {
       products: [],
+      currentProductIndex: '',
       currentProduct: '',
       productId: '',
+      productInfo: '',
       productDesc: '',
       productStyles: '',
       productFeatures: '',
       productRatings: {},
       currentStyle: '',
       currentStyleIndex: '',
-      onSale: false,
+      currentStyleImgIndex: '',
       styleImages: '',
       currentImg: '',
       imageStyles: {
         defaultView: {
           display: 'block',
           textAlign: 'center',
-          maxWidth: '50%',
-          maxHeight: '50%',
-          width: 'auto',
-          height: 'auto',
+          maxWidth: '640px',
+          maxHeight: '640px',
+          width: '50%',
+          height: '100%',
           marginLeft: '5px',
           borderRadius: '5px',
-          cursor: 'zoom-in',
         },
         enlargedView: {
           display: 'inline-block',
           alignSelf: 'center',
-          maxWidth: '75%',
-          maxHeight: '80%',
+          maxWidth: '100%',
+          maxHeight: '100%',
           width: 'auto',
           height: 'auto',
           borderRadius: '5px',
-          cursor: 'zoom-out',
-          // marginLeft: '10%'
         }
       },
       currentImgStyleName: 'defaultView',
@@ -57,24 +56,29 @@ class App extends React.Component {
     axios({
       method: 'get',
       url: 'http://52.26.193.201:3000/products/list',
+      // params: {
+      //   page: 1,
+      //   count: 5,
+      // }
     })
       .then((data) => {
         this.setState({
           products: data.data,
           isLoading: false,
+          currentProductIndex: 0,
         })
       })
       .then(() => {
         this.setState({
-          currentProduct: this.state.products[0],
-          productId: this.state.products[0].id,
-          productDesc: this.state.products[0].description,
-          productFeatures: this.state.products[0].features,
+          currentProduct: this.state.products[this.state.currentProductIndex],
+          productId: this.state.products[this.state.currentProductIndex].id,
+          productDesc: this.state.products[this.state.currentProductIndex].description,
         })
       })
       .then(() => {
         this.grabMyProduct();
         this.getRatings();
+        this.grabFeatures();
       })
       .catch((err) => {
         console.log(err);
@@ -89,12 +93,13 @@ class App extends React.Component {
       .then((data) => {
         this.setState({
           productStyles: data.data.results,
+          currentStyleIndex: 0,
+          currentStyleImgIndex: 0,
         })
       })
       .then(() => {
         this.setState({
-          currentStyle: this.state.productStyles[0],
-          currentStyleIndex: 0,
+          currentStyle: this.state.productStyles[this.state.currentStyleIndex],
         })
       })
       .then(() => {
@@ -104,36 +109,35 @@ class App extends React.Component {
       })
       .then(() => {
         this.setState({
-          currentImg: this.state.styleImages[0],
+          currentImg: this.state.styleImages[this.state.currentStyleImgIndex],
           currentImgStyle: this.state.imageStyles.defaultView,
           thumbIsLoading: false,
         })
       })
-      .then(() => {
-        this.onSale();
-      })
   }
 
-  onSale() {
-    if (parseInt(this.state.currentStyle.sale_price) > 0) {
+  grabFeatures() {
+    axios({
+      method: 'get',
+      url: `http://52.26.193.201:3000/products/${this.state.productId}`
+    })
+    .then((data) => {
       this.setState({
-        onSale: true,
+        productInfo: data.data,
+        productFeatures: data.data.features,
       })
-    }
+    })
   }
 
   changeView() {
     if (this.state.currentImgStyleName === 'defaultView') {
       this.setState({
-        // thumbIsLoading: true,
-        currentImgStyle: this.state.imageStyles.enlargedView,
         currentImgStyleName: 'enlargedView',
       })
     }
     if (this.state.currentImgStyleName === 'enlargedView') {
       this.setState({
         thumbIsLoading: false,
-        currentImgStyle: this.state.imageStyles.defaultView,
         currentImgStyleName: 'defaultView',
       })
     }
@@ -154,36 +158,45 @@ class App extends React.Component {
   pickImage(index) {
     this.setState({
       currentImg: this.state.styleImages[index],
-      currentStyleIndex: index,
+      currentStyleImgIndex: index,
     })
   }
 
   prevImage() {
     {
-      this.state.styleImages[this.state.currentStyleIndex - 1] !== undefined
+      this.state.styleImages[this.state.currentStyleImgIndex - 1] !== undefined
       ? this.setState({
-        currentStyleIndex: this.state.currentStyleIndex - 1,
-        currentImg: this.state.styleImages[this.state.currentStyleIndex - 1],
+        currentStyleImgIndex: this.state.currentStyleImgIndex - 1,
+        currentImg: this.state.styleImages[this.state.currentStyleImgIndex - 1],
       })
       : this.setState({
         currentImg: this.state.styleImages[this.state.styleImages.length - 1],
-        currentStyleIndex: this.state.styleImages.length - 1,
+        currentStyleImgIndex: this.state.styleImages.length - 1,
       })
     }
   }
 
   nextImage() {
     {
-      this.state.styleImages[this.state.currentStyleIndex + 1] !== undefined
+      this.state.styleImages[this.state.currentStyleImgIndex + 1] !== undefined
       ? this.setState({
-        currentStyleIndex: this.state.currentStyleIndex + 1,
-        currentImg: this.state.styleImages[this.state.currentStyleIndex + 1]
+        currentStyleImgIndex: this.state.currentStyleImgIndex + 1,
+        currentImg: this.state.styleImages[this.state.currentStyleImgIndex + 1]
       })
     : this.setState({
-        currentStyleIndex: 0,
+        currentStyleImgIndex: 0,
         currentImg: this.state.styleImages[0]
       })
     }
+  }
+
+  stylePicker(index) {
+    this.setState({
+      currentStyle: this.state.productStyles[index],
+      currentStyleIndex: index,
+      styleImages: this.state.productStyles[index].photos,
+      currentImg: this.state.productStyles[index].photos[this.state.currentStyleImgIndex],
+    })
   }
 
   render() {
@@ -196,7 +209,14 @@ class App extends React.Component {
           <h3 style={{ textAlign: 'center' }}>Announcements Will Go Here</h3>
         </Grid>
         <Grid id='content' container>
-          <Content state={this.state} pickImage={this.pickImage.bind(this)} changeView={this.changeView.bind(this)} nextImage={this.nextImage.bind(this)} prevImage={this.prevImage.bind(this)} />
+          <Content
+            state={this.state}
+            pickImage={this.pickImage.bind(this)}
+            changeView={this.changeView.bind(this)}
+            nextImage={this.nextImage.bind(this)}
+            prevImage={this.prevImage.bind(this)}
+            stylePicker={this.stylePicker.bind(this)}
+          />
         </Grid>
       </Grid>
     )

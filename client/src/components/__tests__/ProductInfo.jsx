@@ -26,7 +26,7 @@ it('Renders the appropriate category, name, and non-sale price', () => {
   let mount = createMount();
 
   let props = {
-    // isLoading: false,
+
     productRatings: { 2: 2, 3: 1, 4: 2 },
     currentProduct: {
       category: 'Pants',
@@ -37,7 +37,7 @@ it('Renders the appropriate category, name, and non-sale price', () => {
       original_price: 100,
       sale_price: 0,
     },
-    onSale: false,
+
   };
 
   const firstTest = mount(
@@ -57,7 +57,7 @@ it('Renders the appropriate category, name, and on-sale price', () => {
   let mount = createMount();
 
   let props = {
-    // isLoading: false,
+
     productRatings: { 2: 2, 3: 1, 4: 2 },
     currentProduct: {
       category: 'Pants',
@@ -68,7 +68,7 @@ it('Renders the appropriate category, name, and on-sale price', () => {
       original_price: 100,
       sale_price: 40,
     },
-    onSale: true,
+
   };
 
   const firstTest = mount(

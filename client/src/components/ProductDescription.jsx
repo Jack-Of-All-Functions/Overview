@@ -9,31 +9,15 @@ import { sizing } from '@material-ui/system'
 
 const useStyles = makeStyles({
   root: {
-    height: 'auto',
-  },
-  bullet: {
-    display: 'inline-block',
-    margin: '0 2px',
-    transform: 'scale(0.8)',
-  },
-  title: {
-    fontSize: 14,
-  },
-  pos: {
-    marginBottom: 'auto',
-  },
-  bigCard: {
     height: '100%',
-  }
-
+    minHeight: '100%',
+    maxHeight: '100%',
+  },
 });
 
 
 const ProductDescCard = (props) => {
   const classes = useStyles();
-  const bull = <span className={classes.bullet}>•</span>;
-  const products = props.state.products;
-  const product = products[0];
 
   return (
     <Card className={classes.root} variant='outlined'>
@@ -41,8 +25,8 @@ const ProductDescCard = (props) => {
         {props.state.isLoading
           ? <h4>Loading...</h4>
           : <div>
-            <h2 id='slogan'>{product.slogan}</h2>
-            <p id='description'>{product.description}</p>
+            <h2 id='slogan'>{props.state.currentProduct.slogan}</h2>
+            <p id='description'>{props.state.currentProduct.description}</p>
           </div>
         }
       </CardContent>

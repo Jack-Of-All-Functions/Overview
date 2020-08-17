@@ -54,7 +54,6 @@ const ProductInfoCard = (props) => {
   return (
     <Card className={classes.root} variant='outlined'>
       <CardContent>
-
         {props.state.isLoading
           ? <h4>Loading...</h4>
           : <div>
@@ -62,12 +61,14 @@ const ProductInfoCard = (props) => {
               <Rating id='rating' name="half-rating-read" precision={0.25} value={rating} size='small' readOnly style={{ marginBottom: '0px' }} />
               <h5 style={{ marginBottom: '0px', marginTop: '0px', textDecoration: 'underline' }}>Read All ({reviewTotal}) Reviews</h5>
             </div>
-            {props.state.onSale
+            {props.state.currentStyle.sale_price !== '0'
               ? <div>
                 <p id='productCategory' style={{ marginBottom: '0px' }}>{props.state.currentProduct.category}</p>
                 <h1 id='productName' style={{ marginBottom: '0px', marginTop: '2px' }}>{props.state.currentProduct.name}</h1>
-                <p id='salePrice' style={{ marginBottom: '0px', marginTop: '2px', color: 'red', fontWeight: 'bold' }}>${props.state.currentStyle.sale_price}</p>
-                <p id='productPrice' style={{ marginBottom: '0px', marginTop: '2px', textDecoration: 'line-through' }}>${props.state.currentStyle.original_price}</p>
+                <div>
+                <p id='salePrice' style={{ marginBottom: '0px', marginTop: '2px', marginRight: '5px', color: 'red', fontWeight: 'bold', display: 'inline' }}>${props.state.currentStyle.sale_price}</p>
+                <p id='productPrice' style={{ marginBottom: '0px', marginTop: '2px', textDecoration: 'line-through', display: 'inline' }}>${props.state.currentStyle.original_price}</p>
+                </div>
               </div>
               : <div>
                 <p id='productCategory' style={{ marginBottom: '0px' }}>{props.state.currentProduct.category}</p>
@@ -97,7 +98,6 @@ const ProductInfoCard = (props) => {
             </div>
           </div>
         }
-
       </CardContent>
     </Card >
   );

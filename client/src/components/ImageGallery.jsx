@@ -11,52 +11,33 @@ import { sizing } from '@material-ui/system';
 import ZoomInIcon from '@material-ui/icons/ZoomIn';
 import ZoomOutIcon from '@material-ui/icons/ZoomOut';
 import ZoomOutMapIcon from '@material-ui/icons/ZoomOutMap';
+import AspectRatioIcon from '@material-ui/icons/AspectRatio';
 import { Icon } from '@material-ui/core';
 import ImageThumbnails from './ImageThumbnails.jsx'
 import { Grid, Paper } from '@material-ui/core';
-import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
-import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
+import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
+import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 
 
 const ImageCard = (props) => {
 
   const useStyles = makeStyles({
-    root: {
-      height: 'auto',
-    },
     bigCard: {
       height: 'auto',
       width: 'auto',
-      maxHeight: '100%',
-      maxWidth: '100%',
-      display: 'flex',
-      // maxHeight: '250px',
-      alignContent: 'center',
-      alignItems: 'center',
-      justifyContent: 'center',
-      margin: 'auto',
-      position: 'relative',
-      cursor: 'default',
+      cursor: 'zoom-in',
+      background: `no-repeat center / contain url(${props.state.currentImg.url})`,
     },
     currentView: props.state.currentImgStyle,
-    tester: {
-      backgroundImage: `url(${props.state.currentImg.url})`,
-      backgroundSize: 'contain',
-      backgroundRepeat: 'no-repeat',
-      height: 'auto',
-      width: 'auto',
-      maxHeight: '100%',
-      maxWidth: '100%',
-    },
-    tester2: {
-      backgroundImage: `url(${props.state.currentImg.url})`,
-      backgroundSize: 'cover',
-      bacgroundSize: 'auto',
-      backgroundRepeat: 'no-repeat',
-    }
   });
 
   const classes = useStyles();
+
+  const handleClick = (e) => {
+    if (e.target.nodeName === 'DIV') {
+      props.changeView();
+    }
+  }
 
   return (
     <div>
@@ -64,13 +45,13 @@ const ImageCard = (props) => {
         ? <h1>Loading...</h1>
         :
         <Card  className={classes.bigCard} elevation={0} variant='outlined'>
-          <div style={{ width: '100%', cursor: 'default' }} >
-            {(props.state.currentImgStyleName === 'defaultView')
-              ? <ZoomInIcon style={{ marginLeft: '95%', marginTop: '5px', cursor: 'pointer' }} onClick={props.changeView} />
-              : <ZoomOutIcon style={{ marginLeft: '95%', marginTop: '5px', cursor: 'pointer' }} onClick={props.changeView} />
-            }
-            <CardContent >
-              <Grid >
+          <div  id='thing' onClick={handleClick}>
+          <div style={{display: 'flex', justifyContent: 'space-between'}}>
+            <div style={{display: 'inline-block', textAlign: 'left'}}/>
+            <AspectRatioIcon style={{ textAlign: 'right', marginTop: '5px', marginRight: '10px', cursor: 'pointer', display: 'inline-block'}} onClick={props.changeView} />
+            </div>
+            <CardContent  >
+              <Grid>
                 {props.state.isLoading
                   ? <h1>Loading...</h1>
                   : <Grid container direction='column'>
@@ -79,14 +60,10 @@ const ImageCard = (props) => {
                         ? <h6></h6>
                         : <ImageThumbnails pickImage={props.pickImage} style={{ cursor: 'pointer' }} state={props.state} />
                       }
-                      <ArrowBackIosIcon style={{ marginLeft: '10%', marginTop: '40%', cursor: 'pointer'}} onClick={props.prevImage}/>
-                      <CardMedia
-                        className={classes.currentView}
-                        component='img'
-                        image={props.state.currentImg.url}
-                        onClick={props.changeView}
-                      />
-                      <ArrowForwardIosIcon style={{marginLeft: '10px', marginTop: '40%', cursor: 'pointer'}} onClick={props.nextImage}/>
+                      <div style={{ marginTop: '250px', display: 'flex', justifyContent: 'space-between', width: '90%'}}>
+                      <NavigateBeforeIcon fontSize={'large'} style={{ cursor: 'pointer', display: 'inline-block', textAlign: 'left', marginLeft: '5%'}} onClick={props.prevImage}/>
+                      <NavigateNextIcon fontSize={'large'} style={{ cursor: 'pointer',  display: 'inline-block', textAlign: 'right', marginRight: '0'}} onClick={props.nextImage}/>
+                      </div>
                     </Grid>
                   </Grid>
                 }
@@ -96,7 +73,6 @@ const ImageCard = (props) => {
           <CardActions>
           </CardActions>
         </Card>
-
       }
     </div>
   );
