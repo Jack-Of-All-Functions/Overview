@@ -60,7 +60,7 @@ const Content = (props) => {
           ? <Grid className={classes.tripleGrid} item xs={12} sm={4}>
             <ProductInfoCard state={props.state} />
             <StyleSelectorCard state={props.state} stylePicker={props.stylePicker} />
-            <CartCard />
+            <CartCard state={props.state}/>
           </Grid>
           : <div />
         }

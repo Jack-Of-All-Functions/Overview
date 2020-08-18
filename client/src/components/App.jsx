@@ -56,10 +56,10 @@ class App extends React.Component {
     axios({
       method: 'get',
       url: 'http://52.26.193.201:3000/products/list',
-      // params: {
-      //   page: 1,
-      //   count: 5,
-      // }
+      params: {
+        page: 1,
+        count: 5,
+      }
     })
       .then((data) => {
         this.setState({
@@ -129,6 +129,18 @@ class App extends React.Component {
     })
   }
 
+  getRatings() {
+    axios({
+      method: 'get',
+      url: `http://52.26.193.201:3000/reviews/${this.state.productId}/meta`
+    })
+      .then((data) => {
+        this.setState({
+          productRatings: data.data.ratings,
+        })
+      })
+  }
+
   changeView() {
     if (this.state.currentImgStyleName === 'defaultView') {
       this.setState({
@@ -141,18 +153,6 @@ class App extends React.Component {
         currentImgStyleName: 'defaultView',
       })
     }
-  }
-
-  getRatings() {
-    axios({
-      method: 'get',
-      url: `http://52.26.193.201:3000/reviews/${this.state.productId}/meta`
-    })
-      .then((data) => {
-        this.setState({
-          productRatings: data.data.ratings,
-        })
-      })
   }
 
   pickImage(index) {
