@@ -5,38 +5,162 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import { sizing } from '@material-ui/system'
+import { sizing } from '@material-ui/system';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import { Grid } from '@material-ui/core';
+import Popover from '@material-ui/core/Popover';
 
 const useStyles = makeStyles({
   root: {
     height: 'auto',
   },
-  bullet: {
-    display: 'inline-block',
-    margin: '0 2px',
-    transform: 'scale(0.8)',
+  sizeSelector: {
+    width: '65%',
+    height: '40px',
   },
-  title: {
-    fontSize: 14,
+  quantitySelector: {
+    width: '30%',
+    height: '40px',
+    marginLeft: '5%',
   },
-  pos: {
-    marginBottom: 'auto',
+  bagButtonOuter: {
+    width: '100%',
+    marginTop: '5%',
   },
-  bigCard: {
-    height: '100%',
+  bagButtonInner: {
+    width: '100%',
+    height: '50px',
+    marginTop: '5%',
   }
 
 });
 
 
-const CartCard = () => {
+const CartCard = (props) => {
   const classes = useStyles();
-  const bull = <span className={classes.bullet}>•</span>;
+
+  let sizes = props.state.currentStyle.skus;
+  let sizeArray = [];
+
+  let sizer = (obj) => {
+    for (let key in obj) {
+      if (obj[key] > 0) {
+        sizeArray.push(key)
+      } else {
+        sizeArray.push(`${key} Out of Stock`)
+      }
+    }
+    // if (typeof(sizeArray[0]) === 'number') {
+    //   console.log('Bing!')
+    //   sizeArray.sort((a, b) => a - b);
+    // }
+    // if (typeof(sizeArray[0]) !== 'number') {
+    //   sizeArray.sort();
+    // }
+  }
+  sizer(sizes);
+
+  const sizeList = sizeArray.map((size, index) =>
+    <MenuItem key={index} value={size}>{size}</MenuItem>
+  )
+
+  let quantityArray = [];
+
+  let quantitySetter = (obj, val) => {
+    for (let key in obj) {
+      if (key === val) {
+        for (let i = 2; i < obj[key]; i++) {
+          quantityArray.push(i);
+          props.setQuantityArray(quantityArray);
+        }
+      }
+    }
+  }
+
+  let quantityList = props.state.quantityArray.map((quant, index) =>
+    <MenuItem key={index} value={quant}>{quant}</MenuItem>
+  )
+
+  const handleChangeSize = (event) => {
+    quantitySetter(sizes, event.target.value);
+    props.selectSize(event);
+  }
+
+  const handleChangeQ = (event) => {
+    props.selectQ(event.target.value);
+  }
+
+  const handleClick = () => {
+    if (props.state.sizeSelected === false) {
+      props.sizeNotPicked();
+    } else {
+      alert('Added to bag!')
+    }
+  }
+
+  const handleClickSizer = () => {
+    props.sizeNotPicked();
+  }
 
   return (
     <Card className={classes.root} variant='outlined'>
       <CardContent>
-        Add To Cart Card
+        <Grid>
+          <FormControl className={classes.sizeSelector} variant='outlined'>
+            <InputLabel id="selectSize">Select Size</InputLabel>
+            <Select
+              labelId="selectSize"
+              id="size"
+              label="Select Size"
+              value={props.state.currentSize || ''}
+              required
+              onChange={handleChangeSize}
+              open={props.state.openSizeSelector}
+              onOpen={() => handleClickSizer()}
+              onClose={() => handleClickSizer()}
+            >
+              <FormHelperText>Please Select a Size</FormHelperText>
+              {sizeList}
+            </Select>
+          </FormControl>
+
+          {props.state.sizeSelected
+            ? <FormControl className={classes.quantitySelector} variant='outlined'>
+              <InputLabel id="selectQuantity"> Qty </InputLabel>
+              <Select
+                labelId="selectQuantity"
+                id="quantity"
+                label="Qty"
+                value={props.state.quantity || 1}
+                onChange={handleChangeQ}
+              >
+                <MenuItem value={1}> 1 </MenuItem>
+                {quantityList}
+              </Select>
+            </FormControl>
+            : <FormControl disabled className={classes.quantitySelector} variant='outlined'>
+              <InputLabel id="selectQuantity">  </InputLabel>
+              <Select
+                labelId="selectQuantity"
+                id="quantity"
+                value={props.state.quantity}
+                defaultValue={1}
+              >
+                <MenuItem value={1}> - </MenuItem>
+              </Select>
+            </FormControl>
+          }
+        </Grid>
+
+        <Grid className={classes.bagButtonOuter}>
+          <Button className={classes.bagButtonInner} variant="outlined" color="primary" onClick={() => handleClick()}>
+            Add to Bag
+          </Button>
+        </Grid>
       </CardContent>
     </Card>
   );

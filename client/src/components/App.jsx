@@ -47,6 +47,11 @@ class App extends React.Component {
       },
       currentImgStyleName: 'defaultView',
       currentImgStyle: '',
+      currentSize: null,
+      quantity: '1',
+      quantityArray: [1],
+      sizeSelected: false,
+      openSizeSelector: false,
       isLoading: true,
       thumbIsLoading: true,
     }
@@ -56,10 +61,10 @@ class App extends React.Component {
     axios({
       method: 'get',
       url: 'http://52.26.193.201:3000/products/list',
-      // params: {
-      //   page: 1,
-      //   count: 5,
-      // }
+      params: {
+        page: 1,
+        count: 5,
+      }
     })
       .then((data) => {
         this.setState({
@@ -129,6 +134,18 @@ class App extends React.Component {
     })
   }
 
+  getRatings() {
+    axios({
+      method: 'get',
+      url: `http://52.26.193.201:3000/reviews/${this.state.productId}/meta`
+    })
+      .then((data) => {
+        this.setState({
+          productRatings: data.data.ratings,
+        })
+      })
+  }
+
   changeView() {
     if (this.state.currentImgStyleName === 'defaultView') {
       this.setState({
@@ -141,18 +158,6 @@ class App extends React.Component {
         currentImgStyleName: 'defaultView',
       })
     }
-  }
-
-  getRatings() {
-    axios({
-      method: 'get',
-      url: `http://52.26.193.201:3000/reviews/${this.state.productId}/meta`
-    })
-      .then((data) => {
-        this.setState({
-          productRatings: data.data.ratings,
-        })
-      })
   }
 
   pickImage(index) {
@@ -199,6 +204,39 @@ class App extends React.Component {
     })
   }
 
+  selectSize(event) {
+    event.preventDefault();
+    this.setState({
+      currentSize: event.target.value,
+      sizeSelected: true,
+      openSizeSelector: false,
+    })
+  }
+
+  sizeNotPicked() {
+    if(!this.state.openSizeSelector) {
+      this.setState({
+        openSizeSelector: true,
+      })
+    } else {
+      this.setState({
+        openSizeSelector: false,
+      })
+    }
+  }
+
+  setQuantityArray(array) {
+    this.setState({
+      quantityArray: array,
+    })
+  }
+
+  selectQ(number) {
+    this.setState({
+      quantity: number,
+    })
+  }
+
   render() {
     return (
       <Grid id='layout' container direction='column'>
@@ -216,6 +254,10 @@ class App extends React.Component {
             nextImage={this.nextImage.bind(this)}
             prevImage={this.prevImage.bind(this)}
             stylePicker={this.stylePicker.bind(this)}
+            selectSize={this.selectSize.bind(this)}
+            setQuantityArray={this.setQuantityArray.bind(this)}
+            selectQ={this.selectQ.bind(this)}
+            sizeNotPicked={this.sizeNotPicked.bind(this)}
           />
         </Grid>
       </Grid>

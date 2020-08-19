@@ -22,7 +22,7 @@ const Content = (props) => {
       maxHeight: '75%',
       height: '100%',
       width: 'auto',
-      maxWidth: '75%',
+      // maxWidth: '75%',
       cursor: 'pointer',
     },
     imageGridExpanded: {
@@ -34,7 +34,7 @@ const Content = (props) => {
     tripleGrid: {
       maxHeight: '75%',
       width: 'auto',
-      maxWidth: '75%',
+      // maxWidth: '75%',
     },
     infoGrid: {
       height: '25%',
@@ -60,7 +60,7 @@ const Content = (props) => {
           ? <Grid className={classes.tripleGrid} item xs={12} sm={4}>
             <ProductInfoCard state={props.state} />
             <StyleSelectorCard state={props.state} stylePicker={props.stylePicker} />
-            <CartCard />
+            <CartCard state={props.state} selectSize={props.selectSize} setQuantityArray={props.setQuantityArray} selectQ={props.selectQ} sizeNotPicked={props.sizeNotPicked}/>
           </Grid>
           : <div />
         }
