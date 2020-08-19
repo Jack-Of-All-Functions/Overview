@@ -50,7 +50,6 @@ const CartCard = (props) => {
     for (let key in obj) {
       if (obj[key] > 0) {
         sizeArray.push(key)
-
       } else {
         sizeArray.push(`${key} Out of Stock`)
       }
@@ -62,7 +61,6 @@ const CartCard = (props) => {
     // if (typeof(sizeArray[0]) !== 'number') {
     //   sizeArray.sort();
     // }
-
   }
   sizer(sizes);
 
@@ -78,12 +76,10 @@ const CartCard = (props) => {
         for (let i = 2; i < obj[key]; i++) {
           quantityArray.push(i);
           props.setQuantityArray(quantityArray);
-
         }
       }
     }
   }
-
 
   let quantityList = props.state.quantityArray.map((quant, index) =>
     <MenuItem key={index} value={quant}>{quant}</MenuItem>
@@ -101,6 +97,8 @@ const CartCard = (props) => {
   const handleClick = () => {
     if (props.state.sizeSelected === false) {
       props.sizeNotPicked();
+    } else {
+      alert('Added to bag!')
     }
   }
 
@@ -125,11 +123,10 @@ const CartCard = (props) => {
               onOpen={() => handleClickSizer()}
               onClose={() => handleClickSizer()}
             >
-              <MenuItem value={props.CurrentSize}></MenuItem>
+              <FormHelperText>Please Select a Size</FormHelperText>
               {sizeList}
             </Select>
           </FormControl>
-
 
           {props.state.sizeSelected
             ? <FormControl className={classes.quantitySelector} variant='outlined'>
@@ -158,26 +155,11 @@ const CartCard = (props) => {
             </FormControl>
           }
         </Grid>
+
         <Grid className={classes.bagButtonOuter}>
           <Button className={classes.bagButtonInner} variant="outlined" color="primary" onClick={() => handleClick()}>
             Add to Bag
           </Button>
-          {/* <Popover
-            open={props.state.openSizeSelector}
-            anchorEl={document.getElementById('size')}
-            onOpen={() => handleClickSizer()}
-            onClose={() => handleClickSizer()}
-            anchorOrigin={{
-              vertical: 'top',
-              horizontal: 'center',
-            }}
-            transformOrigin={{
-              vertical: 'top',
-              horizontal: 'center',
-            }}
-          >
-            <Typography>Please Select a Size!</Typography>
-          </Popover> */}
         </Grid>
       </CardContent>
     </Card>
