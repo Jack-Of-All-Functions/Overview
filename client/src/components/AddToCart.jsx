@@ -12,22 +12,23 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import { Grid } from '@material-ui/core';
+import Popover from '@material-ui/core/Popover';
 
 const useStyles = makeStyles({
   root: {
     height: 'auto',
   },
   sizeSelector: {
-    width: '45%',
+    width: '65%',
     height: '40px',
   },
   quantitySelector: {
-    width: '20%',
+    width: '30%',
     height: '40px',
     marginLeft: '5%',
   },
   bagButtonOuter: {
-    width: '70%',
+    width: '100%',
     marginTop: '5%',
   },
   bagButtonInner: {
@@ -47,14 +48,65 @@ const CartCard = (props) => {
 
   let sizer = (obj) => {
     for (let key in obj) {
-      sizeArray.push(key)
+      if (obj[key] > 0) {
+        sizeArray.push(key)
+
+      } else {
+        sizeArray.push(`${key} Out of Stock`)
+      }
     }
+    // if (typeof(sizeArray[0]) === 'number') {
+    //   console.log('Bing!')
+    //   sizeArray.sort((a, b) => a - b);
+    // }
+    // if (typeof(sizeArray[0]) !== 'number') {
+    //   sizeArray.sort();
+    // }
+
   }
   sizer(sizes);
 
   const sizeList = sizeArray.map((size, index) =>
-    <MenuItem>{size}</MenuItem>
+    <MenuItem key={index} value={size}>{size}</MenuItem>
   )
+
+  let quantityArray = [];
+
+  let quantitySetter = (obj, val) => {
+    for (let key in obj) {
+      if (key === val) {
+        for (let i = 2; i < obj[key]; i++) {
+          quantityArray.push(i);
+          props.setQuantityArray(quantityArray);
+
+        }
+      }
+    }
+  }
+
+
+  let quantityList = props.state.quantityArray.map((quant, index) =>
+    <MenuItem key={index} value={quant}>{quant}</MenuItem>
+  )
+
+  const handleChangeSize = (event) => {
+    quantitySetter(sizes, event.target.value);
+    props.selectSize(event);
+  }
+
+  const handleChangeQ = (event) => {
+    props.selectQ(event.target.value);
+  }
+
+  const handleClick = () => {
+    if (props.state.sizeSelected === false) {
+      props.sizeNotPicked();
+    }
+  }
+
+  const handleClickSizer = () => {
+    props.sizeNotPicked();
+  }
 
   return (
     <Card className={classes.root} variant='outlined'>
@@ -65,32 +117,67 @@ const CartCard = (props) => {
             <Select
               labelId="selectSize"
               id="size"
-            // value={age}
-            // onChange={handleChange}
+              label="Select Size"
+              value={props.state.currentSize || ''}
+              required
+              onChange={handleChangeSize}
+              open={props.state.openSizeSelector}
+              onOpen={() => handleClickSizer()}
+              onClose={() => handleClickSizer()}
             >
-              {/* <MenuItem value={10}>Ten</MenuItem>
-          <MenuItem value={20}>Twenty</MenuItem>
-          <MenuItem value={30}>Thirty</MenuItem> */}
+              <MenuItem value={props.CurrentSize}></MenuItem>
               {sizeList}
             </Select>
           </FormControl>
-          <FormControl className={classes.quantitySelector} variant='outlined'>
-            <InputLabel id="selectQuantity"> </InputLabel>
-            <Select
-              labelId="selectQuantity"
-              id="quantity"
-              // value={quantity}
-              // onChange={handleChange}
-              defaultValue={'-'}
-            >
-              <MenuItem value={'-'}> - </MenuItem>
-            </Select>
-          </FormControl>
+
+
+          {props.state.sizeSelected
+            ? <FormControl className={classes.quantitySelector} variant='outlined'>
+              <InputLabel id="selectQuantity"> Qty </InputLabel>
+              <Select
+                labelId="selectQuantity"
+                id="quantity"
+                label="Qty"
+                value={props.state.quantity || 1}
+                onChange={handleChangeQ}
+              >
+                <MenuItem value={1}> 1 </MenuItem>
+                {quantityList}
+              </Select>
+            </FormControl>
+            : <FormControl disabled className={classes.quantitySelector} variant='outlined'>
+              <InputLabel id="selectQuantity">  </InputLabel>
+              <Select
+                labelId="selectQuantity"
+                id="quantity"
+                value={props.state.quantity}
+                defaultValue={1}
+              >
+                <MenuItem value={1}> - </MenuItem>
+              </Select>
+            </FormControl>
+          }
         </Grid>
         <Grid className={classes.bagButtonOuter}>
-          <Button className={classes.bagButtonInner} variant="outlined" color="primary">
+          <Button className={classes.bagButtonInner} variant="outlined" color="primary" onClick={() => handleClick()}>
             Add to Bag
           </Button>
+          {/* <Popover
+            open={props.state.openSizeSelector}
+            anchorEl={document.getElementById('size')}
+            onOpen={() => handleClickSizer()}
+            onClose={() => handleClickSizer()}
+            anchorOrigin={{
+              vertical: 'top',
+              horizontal: 'center',
+            }}
+            transformOrigin={{
+              vertical: 'top',
+              horizontal: 'center',
+            }}
+          >
+            <Typography>Please Select a Size!</Typography>
+          </Popover> */}
         </Grid>
       </CardContent>
     </Card>

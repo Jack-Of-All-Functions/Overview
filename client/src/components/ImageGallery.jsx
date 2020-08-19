@@ -55,13 +55,13 @@ const ImageCard = (props) => {
                 {props.state.isLoading
                   ? <h1>Loading...</h1>
                   : <Grid container direction='column'>
-                    <Grid style={{ marginLeft: '5px' }} container >
+                    <Grid style={{ marginLeft: '5px'}} container >
                       {props.state.thumbIsLoading
                         ? <h6></h6>
-                        : <ImageThumbnails pickImage={props.pickImage} style={{ cursor: 'pointer' }} state={props.state} />
+                        : <ImageThumbnails pickImage={props.pickImage} style={{ cursor: 'pointer', marginTop: '10%' }} state={props.state} />
                       }
                       <div style={{ marginTop: '250px', display: 'flex', justifyContent: 'space-between', width: '90%'}}>
-                      <NavigateBeforeIcon fontSize={'large'} style={{ cursor: 'pointer', display: 'inline-block', textAlign: 'left', marginLeft: '5%'}} onClick={props.prevImage}/>
+                      <NavigateBeforeIcon fontSize={'large'} style={{ cursor: 'pointer', display: 'inline-block', textAlign: 'left', marginLeft: '25px'}} onClick={props.prevImage}/>
                       <NavigateNextIcon fontSize={'large'} style={{ cursor: 'pointer',  display: 'inline-block', textAlign: 'right', marginRight: '0'}} onClick={props.nextImage}/>
                       </div>
                     </Grid>
