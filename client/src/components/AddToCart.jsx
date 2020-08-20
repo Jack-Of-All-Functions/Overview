@@ -147,7 +147,6 @@ const CartCard = (props) => {
               <Select
                 labelId="selectQuantity"
                 id="quantity"
-                value={props.state.quantity}
                 defaultValue={1}
               >
                 <MenuItem value={1}> - </MenuItem>

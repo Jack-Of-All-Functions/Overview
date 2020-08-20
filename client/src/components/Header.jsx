@@ -14,7 +14,7 @@ const Header = () => {
   return (
     <AppBar position='static'>
       <Toolbar>
-        <Typography id='logo' className={classes.mainHeader}>
+        <Typography style={{fontWeight: 'bold'}} id='logo' className={classes.mainHeader}>
           Logo
         </Typography>
         <SearchIcon />

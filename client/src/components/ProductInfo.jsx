@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
@@ -9,6 +9,7 @@ import { sizing } from '@material-ui/system';
 import Rating from '@material-ui/lab/Rating';
 import Box from '@material-ui/core/Box';
 import { InlineShareButtons } from 'sharethis-reactjs';
+import StarBorderIcon from '@material-ui/icons/StarBorder';
 
 
 const ProductInfoCard = (props) => {
@@ -33,6 +34,12 @@ const ProductInfoCard = (props) => {
     }
 
   });
+
+  const StyledRating = withStyles({
+    iconFilled: {
+      color: '#1e88e5'
+    }
+  })(Rating);
 
   const classes = useStyles();
 
