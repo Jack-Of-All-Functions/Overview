@@ -8,10 +8,11 @@
     "node": ">=6.13.0"
   },
   "scripts": {
+    "build": "webpack -p",    
     "react-dev": "webpack -d --watch",
     "start-server": "nodemon server/index.js",
     "test": "jest --coverage",
-    "start": "node server/index.js"
+    "start": "npm run build && node server/index.js"
   },
   "dependencies": {
     "@material-ui/core": "^4.11.0",
