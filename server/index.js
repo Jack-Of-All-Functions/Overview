@@ -5,20 +5,23 @@ const port = process.env.PORT || 3001;
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
-app.use(express.static(__dirname + '/../public'));
+app.use(express.static('public'));
 
-// app.get('/', (req, res) => {
-//   res.send('Basics Are Starting')
-// })
+app.use('/products/list', (req, res) => {
 
-// app.get('http://52.26.193.201:3000/products/list', (req, res) => {
-//   res.send(res);
-// })
+});
 
-// app.get('http://52.26.193.201:3000/products/:product_id/styles', (req, res) => {
-//   res.send(res);
-// })
+app.use('/products/:product_id', (req, res) => {
 
+});
+
+app.use('/products/:product_id/styles', (req, res) => {
+
+});
+
+app.use('/products/:product_id/related', (req, res) => {
+
+});
 
 app.listen(port, () => {
   console.log('Listening at Port:', port)
