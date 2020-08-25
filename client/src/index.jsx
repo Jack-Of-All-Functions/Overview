@@ -11,5 +11,5 @@ ReactDOM.render(
     <CssBaseline />
     <App />
   </ThemeProvider>,
-  document.getElementById('app')
+  document.getElementById('overview')
 )
