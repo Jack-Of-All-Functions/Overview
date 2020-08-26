@@ -20,14 +20,16 @@ app.use('/products/:product_id/styles', (req, res) => {
   res.send(db.styles(product_id))
 });
 
+app.use('/products/:product_id/related', (req, res) => {
+  const { product_id } = req.params;
+
+  res.send(db.related(product_id));
+});
+
 app.use('/products/:product_id', (req, res) => {
   const { product_id } = req.params;
 
   res.send(db.information(product_id));
-});
-
-app.use('/products/:product_id/related', (req, res) => {
-
 });
 
 app.listen(port, () => {

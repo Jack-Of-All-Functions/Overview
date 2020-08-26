@@ -227,5 +227,15 @@ module.exports = {
         ]
     }
     )
+  },
+
+  related: (product_id) => {
+    return [
+      2,
+      18,
+      22,
+      11,
+      21
+    ]
   }
 }
