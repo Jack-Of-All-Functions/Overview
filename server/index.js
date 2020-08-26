@@ -9,13 +9,17 @@ app.use(express.urlencoded({extended: true}));
 app.use(express.static('public'));
 
 app.use('/products/list', (req, res) => {
-  const { page = 1, count = 5 } = req.params;
+  const { page = 1, count = 5 } = req.query;
 
   res.send(db.list());
 });
 
 app.use('/products/:product_id', (req, res) => {
+  const { product_id } = req.params;
 
+  console.log(product_id);
+
+  res.send(db.information());
 });
 
 app.use('/products/:product_id/styles', (req, res) => {
