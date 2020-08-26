@@ -11,19 +11,19 @@ app.use(express.static('public'));
 app.use('/products/list', (req, res) => {
   const { page = 1, count = 5 } = req.query;
 
-  res.send(db.list());
+  res.send(db.list(page, count));
+});
+
+app.use('/products/:product_id/styles', (req, res) => {
+  const { product_id } = req.params;
+
+  res.send(db.styles(product_id))
 });
 
 app.use('/products/:product_id', (req, res) => {
   const { product_id } = req.params;
 
-  console.log(product_id);
-
-  res.send(db.information());
-});
-
-app.use('/products/:product_id/styles', (req, res) => {
-
+  res.send(db.information(product_id));
 });
 
 app.use('/products/:product_id/related', (req, res) => {
