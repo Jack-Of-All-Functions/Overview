@@ -4,7 +4,7 @@ const loremString = `Lorem ipsum dolor sit amet consectetur adipisicing elit. Qu
 
 const lorem = loremString.split(' ');
 
-module.exports = createWords = (totalWords) => {
+module.exports = (totalWords) => {
   // Create an array of words filled with random entries from lorem
   const words = new Array(totalWords).fill(null).map(() => {
     const index = Math.floor(Math.random() * lorem.length);
