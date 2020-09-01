@@ -166,9 +166,11 @@ const generateCategories = async () => {
   await save('categories.json', JSON.stringify(categories), () => console.log('Categories saved.'));
 }
 
-module.exports = async (totalEntries, entriesPerFile) => {
+module.exports = generate = async (totalEntries, entriesPerFile) => {
   // How many total files are going to be made
   const totalFiles = totalEntries / entriesPerFile;
+
+  const begin = Date.now();
 
   // First, create and save category data
   generateCategories();
@@ -181,4 +183,8 @@ module.exports = async (totalEntries, entriesPerFile) => {
     // Save stringified product info to db
     await save(`products${i}.json`, JSON.stringify(products), () => console.log(`First ${currentProgress.toLocaleString()} entries saved`));
   }
+
+  const end = Date.now();
+  const elapsed = (end - begin) / 1000;
+  console.log(`Generated all data in ${elapsed} seconds`);
 }
