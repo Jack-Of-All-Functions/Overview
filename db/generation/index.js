@@ -56,9 +56,43 @@ const save = (fileName, data, cb) => {
   })
 }
 
+const generateProduct = (product_id) => {
+  // Generate name
+  const name = lorem(1);
+  // Generate slogan
+  const slogan = lorem(3);
+  // Generate description
+  const description = lorem(5);
+  // Generate a category id from 1 to 4
+  const category = Math.floor(Math.random() * 4) + 1;
+  // Generate default price from $50 to $200
+  const default_price = (Math.floor(Math.random() * 150) + 50).toPrecision(4);
+  // Generate features
+  // Generate styles
+  // Generate photos
+  // Generate skus
+
+
+  const product = {
+    product_id: product_id,
+    name: name,
+    slogan: slogan,
+    description: description,
+    category: category,
+    default_price: default_price,
+    features: features,
+    styles: styles,
+    photos: photos,
+    skus: skus
+  };
+
+  return product;
+}
+
 module.exports = generateData = (totalEntries, entriesPerFile) => {
   // How many total files are going to be made
   const totalFiles = totalEntries / entriesPerFile;
 
   // Generate data and save each file
+
 }
