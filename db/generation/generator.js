@@ -166,7 +166,7 @@ const generateCategories = async () => {
   await save('categories.json', JSON.stringify(categories), () => console.log('Categories saved.'));
 }
 
-module.exports = generate = async (totalEntries, entriesPerFile) => {
+module.exports = async (totalEntries, entriesPerFile) => {
   // How many total files are going to be made
   const totalFiles = totalEntries / entriesPerFile;
 
@@ -179,7 +179,13 @@ module.exports = generate = async (totalEntries, entriesPerFile) => {
   for(let i = 0; i < totalFiles; i++) {
     const currentProgress = entriesPerFile + entriesPerFile * i;
     // Allocate an array for all products and fill with product data
-    const products = new Array(entriesPerFile).fill(null).map((val, index) => generateProduct(index + currentProgress));
+    const products = new Array(entriesPerFile).fill(null).map((val, index) => {
+      // Calculate base
+      const base = entriesPerFile * i;
+      // Add index + 1 (Postgres is 1 indexed)
+      const product_id = base + index + 1;
+      return generateProduct(product_id)
+    });
     // Save stringified product info to db
     await save(`products${i}.json`, JSON.stringify(products), () => console.log(`First ${currentProgress.toLocaleString()} entries saved`));
   }
