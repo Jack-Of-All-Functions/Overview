@@ -31,13 +31,6 @@ const insert = async (table, data) => {
   await db(query);
 }
 
-const insertCategories = async (data) => {
-  for(let i = 0; i < data.length; i++) {
-    const query = `INSERT INTO categories (name) VALUES ('${data[i]}')`;
-    await db(query);
-  }
-}
-
 const insertProducts = async (rows) => {
   // Pull relevent data from rows before inserting
   const products = rows.map((row) => {
@@ -74,14 +67,12 @@ const insertFeatures = async (rows) => {
 const insertStyles = async (rows) => {
   // Pull style data from rows before inserting
   const styles = rows.map((row) => {
-    const { product_id, styles, photos, skus } = row;
+    const { product_id, styles } = row;
     // console.log('styles product_id', product_id)
 
     return {
       product_id: product_id,
-      styles: styles,
-      photos: photos,
-      skus: skus
+      styles: styles
     }
   });
 
@@ -110,10 +101,6 @@ module.exports = async (totalEntries, entriesPerFile) => {
 
   // Create tables
   await createTables();
-
-  // Load categories file and insert
-  const categories = await open('categories.json');
-  await insertCategories(categories);
 
   // Loop over files and insert data to db
   for(let i = 0; i < totalFiles; i++) {
