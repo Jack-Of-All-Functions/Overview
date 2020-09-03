@@ -1,46 +1,4 @@
 // Data generation script
-
-/**
- * This script will create the JSON files which will hold all the
- * data needed to seed the database. An entry may look like:
- * {
- *   product_id: 1,
- *   name: 'lorem ipsum',
- *   slogan: 'dolor sit amet'
- *   description: 'consectetur adipisicing elit. Recusandae, quis.',
- *   category: 1,
- *   default_price: 140
- *   features: [
- *     {
- *       feature: 'lorem impsum',
- *       value: 'dolor sit amer consectetur adipiscing elit.'
- *     }
- *     //...
- *   ],
- *   styles: [
- *     {
- *       name: 'lorem',
- *       discount: .2,
- *     }
- *     //...
- *   ],
- *   photos: [
- *     {
- *       thumbnail_url: 'someurl.com',
- *       url: 'someurl.com'
- *     }
- *     //...
- *   ],
- *   skus: {
- *     'XS': 1,
- *     'S': 2,
- *     'M': 3,
- *     //...
- *   }
- * }
- */
-
-
 const fs    = require('fs');
 const lorem = require('./lorem');
 
@@ -71,18 +29,29 @@ const generateFeatures = (total) => {
   return features;
 }
 
-const generateStyles = (total) => {
-  const styles = new Array(total).fill(null).map(() => {
-    // Each style has a name, and discount amount
+const generateStyles = (total, original_price, category) => {
+  const styleId = Math.floor(Math.random() * 1000000)
+
+  const styles = new Array(total).fill(null).map((val, i) => {
+    const style_id = styleId + i;
     const name = lorem(2);
     // Does this item have a discount?
     const hasDiscount = Boolean(Math.floor(Math.random() * 2));
-    // Random percentage from 10% to 50%. Only calculate if stlye is on discount
+    // Random percentage from 10% to 50%. Only calculate if style is on discount
     const discount = hasDiscount ? (Math.floor(Math.random() * 40)) / 100 : 0;
+    const sale_price = original_price * (1 - discount);
+
+    const totalPhotos = Math.floor(Math.random() * 3) + 1;
+    const photos = generatePhotos(totalPhotos);
+
+    const skus = generateSkus(category)
 
     return {
       name: name,
-      discount: discount
+      original_price: original_price,
+      sale_price: sale_price,
+      photos: photos,
+      skus: skus
     };
   });
 
@@ -117,14 +86,21 @@ const generateSkus = (category) => {
 }
 
 const generateProduct = (product_id) => {
+  const categories = [
+    'Shoes',
+    'Shirts',
+    'Jackets',
+    'Pants'
+  ];
   // Generate name
   const name = lorem(1);
   // Generate slogan
   const slogan = lorem(3);
   // Generate description
   const description = lorem(5);
-  // Generate a category id from 1 to 4
-  const category = Math.floor(Math.random() * 4) + 1;
+  // Randomly generate a category
+  const categoryIndex = Math.floor(Math.random() * 4);
+  const category = categories[categoryIndex];
   // Generate default price from $50 to $200
   const default_price = Math.floor(Math.random() * 150) + 50
   // Generate features, either 4 or 5
@@ -132,11 +108,7 @@ const generateProduct = (product_id) => {
   const features = generateFeatures(totalFeatures);
   // Generate styles, 3 to 5
   const totalStyles = Math.floor(Math.random() * 3) + 3;
-  const styles = generateStyles(totalStyles);
-  // Generate photos, one per style
-  const photos = generatePhotos(totalStyles);
-  // Generate skus based on category
-  const skus = generateSkus(category);
+  const styles = generateStyles(totalStyles, default_price, categoryIndex);
 
   // Format data correctly before returning
   const product = {
@@ -147,23 +119,10 @@ const generateProduct = (product_id) => {
     category: category,
     default_price: default_price,
     features: JSON.stringify(features),
-    styles: JSON.stringify(styles),
-    photos: JSON.stringify(photos),
-    skus: JSON.stringify(skus)
+    styles: JSON.stringify(styles)
   };
 
   return product;
-}
-
-const generateCategories = async () => {
-  const categories = [
-    'Shoes',
-    'Shirts',
-    'Jackets',
-    'Pants'
-  ];
-
-  await save('categories.json', JSON.stringify(categories), () => console.log('Categories saved.'));
 }
 
 module.exports = async (totalEntries, entriesPerFile) => {
@@ -171,9 +130,6 @@ module.exports = async (totalEntries, entriesPerFile) => {
   const totalFiles = totalEntries / entriesPerFile;
 
   const begin = Date.now();
-
-  // First, create and save category data
-  generateCategories();
 
   // Generate data and save each file
   for(let i = 0; i < totalFiles; i++) {
