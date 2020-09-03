@@ -3,6 +3,6 @@ module.exports = `products (
   name text,
   slogan text,
   description text,
-  category integer REFERENCES categories (id),
+  category text,
   default_price numeric
 );`
