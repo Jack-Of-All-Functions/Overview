@@ -7,8 +7,10 @@ const pool = new Pool(config);
 const query = async (query) => {
   // console.log(query);
   const client = await pool.connect();
-  await client.query(query);
+  const { rows } = await client.query(query);
   client.release();
+
+  return rows;
 }
 
 module.exports = query;
