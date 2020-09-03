@@ -8,7 +8,7 @@
     "node": ">=6.13.0"
   },
   "scripts": {
-    "build": "webpack -p",    
+    "build": "webpack -p",
     "react-dev": "webpack -d --watch",
     "start-server": "nodemon server/index.js",
     "test": "jest --coverage",
@@ -21,6 +21,7 @@
     "@material-ui/styles": "^4.10.0",
     "axios": "^0.19.2",
     "express": "^4.17.1",
+    "pg": "^8.3.3",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "sharethis-reactjs": "^1.6.0"

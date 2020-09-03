@@ -24,4 +24,9 @@ coverage
 build/
 dist/
 
+# All generated data
+db/generation/data
 
+# Make your own config file
+config.json
+generateAndSeed.js

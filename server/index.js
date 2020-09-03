@@ -1,5 +1,5 @@
 const express = require('express');
-const db = require('../db/index');
+const products = require('./controllers/products');
 const app = express();
 const port = process.env.PORT || 3001;
 
@@ -9,27 +9,50 @@ app.use(express.urlencoded({extended: true}));
 app.use(express.static('public'));
 
 app.get('/products/list', (req, res) => {
-  const { page = 1, count = 5 } = req.query;
+  const { page = 0, count = 5 } = req.query;
 
-  res.send(db.list(page, count));
+  products.list(page, count)
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500);
+      res.send('Internal Error');
+    })
 });
 
 app.get('/products/:product_id/styles', (req, res) => {
   const { product_id } = req.params;
 
-  res.send(db.styles(product_id))
+  products.styles(product_id)
+    .then(({ styles }) => {
+      const object = {
+        id: product_id,
+        results: styles
+      }
+      res.send(object);
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500);
+      res.send('Internal Error');
+    })
 });
 
-app.get('/products/:product_id/related', (req, res) => {
+app.get('/products/:product_id', async (req, res) => {
   const { product_id } = req.params;
 
-  res.send(db.related(product_id));
-});
-
-app.get('/products/:product_id', (req, res) => {
-  const { product_id } = req.params;
-
-  res.send(db.information(product_id));
+  products.productInformation(product_id)
+    .then(data => {
+      delete data.product_id;
+      res.send(data);
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500);
+      res.send('Internal Error');
+    })
 });
 
 app.listen(port, () => {
